@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <Nav />
-      <h1>Welcome to Bookie</h1>
+      <h1 className="text-center text-5xl leading-tight font-serif">Welcome to Bookie</h1>
     </>
   );
 }

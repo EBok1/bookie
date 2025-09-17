@@ -11,8 +11,11 @@ function Dropdown() {
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
       ></link>
-      <button onClick={toggleDropdown}>
-        Menu <i className="fa fa-bars text-xl"></i>
+      <button
+        onClick={toggleDropdown}
+        className="text-lg font-semibold font-sans"
+      >
+        Menu <i className="fa fa-bars pl-1"></i>
       </button>
       {isOpen && (
         <ul className="fixed top-14 left-0 w-screen bg-white border shadow flex flex-col items-center py-4 gap-6">
@@ -37,12 +40,18 @@ function Nav() {
       <div className="sm:hidden">
         <Dropdown />
       </div>
-      
+
       {/* Desktop Version - Hidden on mobile */}
       <nav className="hidden sm:flex justify-center gap-20 m-6">
-        <a href="#" className="hover:text-blue-500">Home</a>
-        <a href="#" className="hover:text-blue-500">About</a>
-        <a href="#" className="hover:text-blue-500">Contact</a>
+        <a href="#" className="hover:text-blue-500">
+          Home
+        </a>
+        <a href="#" className="hover:text-blue-500">
+          About
+        </a>
+        <a href="#" className="hover:text-blue-500">
+          Contact
+        </a>
       </nav>
     </>
   );
