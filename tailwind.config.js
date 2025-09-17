@@ -2,7 +2,11 @@
 export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily:{
+        'quicksand': ['Quicksand', 'system-ui', 'sans-serif']
+      }
+    },
   },
   plugins: [],
 }
