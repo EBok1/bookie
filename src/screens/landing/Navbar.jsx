@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Logo from "./Logo";
+import { Link } from 'react-router-dom';
 
 function Dropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,7 +8,7 @@ function Dropdown() {
     setIsOpen(!isOpen);
   };
   return (
-    <div className="relative grid justify-end p-6">
+    <div className="relative flex justify-between mr-6 mb-4 ml-3">
       <Logo />
       <link
         rel="stylesheet"
@@ -22,16 +23,16 @@ function Dropdown() {
       {isOpen && (
         <ul className="fixed top-14 left-0 w-screen bg-white border shadow flex flex-col items-center py-4 gap-6">
           <li>
-            <a href="#">Home</a>
+          <Link to="/">Home</Link>
           </li>
           <li>
-            <a href="#">About</a>
+          <Link to="/about">About</Link>
           </li>
           <li>
-            <a href="#">Contact</a>
+          <Link to="/contact">Contact</Link>
           </li>
           <li>
-            <a href="#">Login</a>
+          <Link to="/login">Login</Link>
           </li>
         </ul>
       )}
@@ -42,13 +43,14 @@ function Dropdown() {
 function Nav() {
   return (
     <>
+     <div className="sticky top-0">
       <div className="sm:hidden">
         <Dropdown />
       </div>
-
+      </div>
       {/* Desktop Version - Hidden on mobile */}
 
-      <nav className="hidden sm:flex justify-between m-6">
+      <nav className="hidden sm:flex justify-between items-center mr-6 mb-4 ml-3">
         <div>
           <Logo />
         </div>
