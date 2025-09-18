@@ -4,7 +4,7 @@ function Logo() {
       <img
         src="/logo.png"
         alt="Logo"
-        className="h-20 fixed justify-items-start ml-2"
+        className="flex h-20"
       />
     </>
   );
