@@ -1,10 +1,10 @@
 import Nav from "./screens/landing/Navbar.jsx";
 import Books from "./screens/landing/Books.jsx";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-function App() {
+function Home() {
   return (
     <>
-      <Nav />
       <h1 className="text-center text-5xl leading-tight font-serif">
         Welcome to Bookie
       </h1>
@@ -20,10 +20,53 @@ function App() {
         <p className="text-lg mb-6 italic text-gray-700">
           "A room without books is like a body without a soul" - Cicero
         </p>
-        <img src="/front-page.png" alt="Image of drawn books" className="h-auto w-screen"/>
+        <img
+          src="/front-page.png"
+          alt="Image of drawn books"
+          className="h-auto w-screen"
+        />
       </div>
       <Books />
     </>
+  );
+}
+
+function About() {
+  return (
+    <div className="p-8">
+      <h1 className="text-3xl">About Page</h1>
+      <p>About content here...</p>
+    </div>
+  );
+}
+
+function Contact() {
+  return(
+    <div>
+      <h1>Contact page</h1>
+    </div>
+  )
+}
+
+function Login() {
+  return (
+    <div>
+      <h1>Login page</h1>
+    </div>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Nav />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
