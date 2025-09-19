@@ -10,10 +10,6 @@ function Dropdown() {
   return (
     <div className="relative flex justify-between mr-6 mb-4 ml-3">
       <Logo />
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-      ></link>
       <button
         onClick={toggleDropdown}
         className="text-lg font-semibold font-quicksand"
@@ -56,21 +52,21 @@ function Nav() {
         </div>
 
         <div className="flex gap-20">
-          <a href="#" className="hover:text-blue-500">
+          <Link to="/" className="hover:text-blue-500">
             Home
-          </a>
-          <a href="#" className="hover:text-blue-500">
+          </Link>
+          <Link to="/about" className="hover:text-blue-500">
             About
-          </a>
-          <a href="#" className="hover:text-blue-500">
+          </Link>
+          <Link to="/contact" className="hover:text-blue-500">
             Contact
-          </a>
+          </Link>
         </div>
 
         <div>
-          <a href="#" className="hover:text-blue-500">
+          <Link to="/login" className="hover:text-blue-500">
             Login
-          </a>
+          </Link>
         </div>
       </nav>
     </>
