@@ -3,12 +3,17 @@ import booksData from '../../books.json';
 
 function BookDetails() {
     const { id } = useParams();
+    console.log('BookDetails rendered, id:', id);
+    console.log('Available books:', booksData.map(b => ({ id: b.id, title: b.title })));
+    
     const book = booksData.find(book => book.id === id);
+    console.log('Found book:', book);
 
     if (!book) {
         return (
             <div className="max-w-4xl mx-auto p-6">
                 <h1 className="text-2xl font-bold mb-4">Book Not Found</h1>
+                <p className="mb-4">Looking for book with ID: {id}</p>
                 <Link to="/" className="text-blue-600 hover:underline">
                     ← Back to Home
                 </Link>
@@ -18,6 +23,10 @@ function BookDetails() {
 
     return (
         <div className="max-w-4xl mx-auto p-6">
+            <h1 className="text-2xl font-bold mb-4" style={{ color: 'red' }}>BookDetails Component Loaded!</h1>
+            <p>Book ID: {id}</p>
+            <p>Book Title: {book.title}</p>
+            
             <Link to="/" className="text-blue-600 hover:underline mb-4 inline-block">
                 ← Back to Home
             </Link>
