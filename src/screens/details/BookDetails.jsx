@@ -3,7 +3,10 @@ import booksData from '../../books.json';
 
 function BookDetails() {
     const { id } = useParams();
+    console.log('URL ID:', id);
+    console.log('Book IDs in data:', booksData.map(b => b.id));
     const book = booksData.find(book => book.id === id);
+    console.log('Found book:', book ? book.title : 'NOT FOUND');
 
     if (!book) {
         return (
@@ -19,6 +22,12 @@ function BookDetails() {
 
     return (
         <div className="max-w-4xl mx-auto p-6">
+            <div className="bg-red-100 p-4 mb-4">
+                <h2>DEBUG: BookDetails Component</h2>
+                <p>URL ID: {id}</p>
+                <p>Found Book: {book.title}</p>
+            </div>
+            
             <Link to="/" className="text-blue-600 hover:underline mb-4 inline-block">
                 ← Back to Home
             </Link>
