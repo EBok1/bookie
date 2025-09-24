@@ -3,6 +3,7 @@ import BookDetailPage from "./pages/BookDetailPage/BookDetailPage.jsx";
 import BookOverviewPage from "./pages/BookOverviewPage/BookOverviewPage.jsx";
 import Navigation from "./components/Navigation/Navigation.jsx";
 import FavoritesList from "./pages/FavoriteListPage/FavoriteListPage.jsx";
+import Logo from "./components/Logo/Logo.jsx";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Navigation />
       <Routes>
         <Route path="/" element={<BookOverviewPage />} />
+        <Route path="/" element={<Logo />} />
         {/* <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} /> */}
