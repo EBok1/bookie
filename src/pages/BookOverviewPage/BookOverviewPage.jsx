@@ -5,7 +5,7 @@ import BookCardGrid from "../../components/BookCardGrid/BookCardGrid";
 function BookOverviewPage() {
   return (
     <>
-      <h1 className="text-center text-5xl leading-tight font-serif">
+      <h1 className="text-center text-5xl leading-tight font-sevillana">
         Welcome to Bookie
       </h1>
       <div className="text-center max-w-2xl mx-auto p-8">
@@ -23,7 +23,7 @@ function BookOverviewPage() {
         <img
           src="/front-page.png"
           alt="Image of drawn books"
-          className="h-auto w-screen"
+          className="h-auto w-screen bg-none bg-transparent"
         />
       </div>
       <h2 className="text-2xl font-bold mb-6">Featured Books</h2>
