@@ -7,6 +7,11 @@ function Dropdown() {
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+
+  const closeDropdown = () => {
+    setIsOpen(false);
+  }
+
   return (
     <div className="relative flex justify-between mr-6 mb-4 ml-3">
       <link
@@ -22,19 +27,19 @@ function Dropdown() {
       {isOpen && (
         <ul className="fixed top-14 left-0 w-screen bg-white border shadow flex flex-col items-center py-4 gap-6">
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/" onClick={closeDropdown}>Home</Link>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <Link to="/about" onClick={closeDropdown}>About</Link>
           </li>
           <li>
-            <Link to="/contact">Contact</Link>
+            <Link to="/contact" onClick={closeDropdown}>Contact</Link>
           </li>
           <li>
-            <Link to="/login">Login</Link>
+            <Link to="/login" onClick={closeDropdown}>Login</Link>
           </li>
           <li>
-            <Link to="/favorites">Favorites❤️</Link>
+            <Link to="/favorites" onClick={closeDropdown}>Favorites❤️</Link>
           </li>
         </ul>
       )}
