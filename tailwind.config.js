@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily:{
-        'quicksand': ['Quicksand', 'system-ui', 'sans-serif']
+        'sevillana': ['Sevillana', 'system-ui', 'sans-serif']
       }
     },
   },
