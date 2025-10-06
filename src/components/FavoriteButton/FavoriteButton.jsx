@@ -63,7 +63,7 @@ function LikeButton({ book }) {
         }}
         className={`like-button ${liked ? "liked" : ""}`} // always had like-button class. if liked is true also add liked class. if liked is false add empty string (nothing)
       >
-        {liked ? "❤️ Added to favorite!" : "♡ Add to favorite"}
+        {liked ? "❤️ Added to favorites!" : "♡ Add to favorites"}
       </button>
     </> // shows different text based on liked state
   );
