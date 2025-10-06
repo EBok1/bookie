@@ -4,6 +4,7 @@ import BookOverviewPage from "./pages/BookOverviewPage/BookOverviewPage.jsx";
 import Navigation from "./components/Navigation/Navigation.jsx";
 import FavoritesList from "./pages/FavoriteListPage/FavoriteListPage.jsx";
 import Logo from "./components/Logo/Logo.jsx";
+import ReturnButton from "./components/ReturnButton/ReturnButton.jsx";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" element={<Login />} /> */}
         <Route path="/favorites" element={<FavoritesList />} />
         <Route path="/book/:id" element={<BookDetailPage />} />
+        <Route path="/" element={<ReturnButton />} />
       </Routes>
     </BrowserRouter>
   );
