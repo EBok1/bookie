@@ -1,25 +1,35 @@
 import React from "react";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import LikeButton from "../FavoriteButton/FavoriteButton";
-import BookReview from "../BookReview/BookReview";
 
 function BookCard({ book }) {
-  const [rating, setRating] = useState(0);
   return (
     <>
       <Link
         key={book.id}
         to={`/book/${book.id}`}
-        className="border rounded-lg p-4 shadow-md"
+        className="border rounded-lg p-4 shadow-md bg-[#fffdf6] "
       >
-        Home
-        <h3 className="font-bold text-lg">{book.title}</h3>
-        <img src={book.coverImageUrl} alt="Image of bookcover" className="w-auto h-auto bg-slate-400"/>
-        <p className="text-gray-600">by {book.author}</p>
-        <p className="text-sm text-blue-600">{book.genre}</p>
-        <BookReview rating={rating} setRating={setRating} />
+        <div className="rounded justify-center flex pb-4">
+          {book.coverImageUrl ? (
+            <img
+              src={book.coverImageUrl}
+              alt={`Cover of ${book.title}`}
+              loading="lazy"
+              className="h-96"
+            />
+          ) : (
+            <div className="h-96 bg-gray-200 w-full" />
+          )}
+        </div>
+        <h3 className="font-bold text-xl mb-4 justify-center font-playfair">{book.title}</h3>
+        <p className="text-gray-600 mt-4 mb-2">{book.author}</p>
+        <div className="flex">
+        <p className="bg-[#bccdbc] px-3 py-1 mb-4 rounded-full text-sm font-medium">
+          {book.genre}
+        </p>
         <LikeButton book={book} />
+        </div>
       </Link>
     </>
   );
