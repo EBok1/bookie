@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily:{
-        'sevillana': ['Sevillana', 'system-ui', 'sans-serif']
+        'playfair': ['Playfair Display', 'system-ui', 'sans-serif']
       }
     },
   },
