@@ -15,8 +15,8 @@ function BookCard({ book }) {
           {book.title}
         </h3>
         <p className="text-gray-600 mt-4 mb-2">{book.author}</p>
-        <div className="flex">
-          <p className="bg-[#bccdbc] px-3 py-1 mb-4 rounded-full text-sm font-medium">
+        <div className="flex justify-between">
+          <p className="bg-[#bccdbc] px-3 py-1 rounded-full text-sm font-medium">
             {book.genre}
           </p>
           <LikeButton book={book} />
