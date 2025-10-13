@@ -80,7 +80,7 @@ function Navigation() {
     <>
       <div
         className={`sm:hidden flex justify-between items-center bg-[#fffdf6] rounded-md shadow-md mx-5 mt-5 ${
-          showBorder ? "border border-[#A55A16] rounded-b-none" : ""
+          showBorder ? "border border-[#A55A16] rounded-b-none" : "border border-transparent"
         }`}
       >
         <Logo />
