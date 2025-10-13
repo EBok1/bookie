@@ -87,7 +87,7 @@ function Navigation() {
         <Dropdown onToggle={setShowBorder} />
       </div>
 
-      <nav className="hidden sm:flex justify-between items-center mr-6 mb-4 ml-3">
+      <nav className="hidden sm:flex justify-between items-center bg-[#fffdf6] rounded-md shadow-md mx-5 mt-5 pl-3 pr-5">
         <div>
           <Logo />
         </div>
