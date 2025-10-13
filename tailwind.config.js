@@ -1,13 +1,16 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+module.exports = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   theme: {
     extend: {
-      fontFamily:{
-        'playfair': ['Playfair Display', 'system-ui', 'sans-serif']
-      }
+      fontFamily: {
+        playfair: ["Playfair Display", "system-ui", "sans-serif"],
+      },
     },
   },
   plugins: [],
-}
-
+};

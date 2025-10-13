@@ -18,9 +18,10 @@ A modern book management and discovery app featuring popular BookTok fantasy and
 
 ## 🛠 Tech Stack
 
+- **Next.js 15** - React framework with App Router
 - **React 19** - Modern React with hooks
-- **Vite** - Fast development and build tool
 - **Tailwind CSS** - Utility-first CSS framework
+- **Supabase** - Backend as a service for reviews and data
 - **ESLint** - Code linting for quality assurance
 - **Font Awesome** - Icons for enhanced UI
 
@@ -44,12 +45,19 @@ cd bookie
 npm install
 ```
 
-3. Start the development server:
+3. Set up environment variables:
+Create a `.env.local` file in the root directory and add your Supabase credentials:
+```
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-supabase-anon-key
+```
+
+4. Start the development server:
 ```bash
 npm run dev
 ```
 
-4. Open your browser and navigate to `http://localhost:5173`
+5. Open your browser and navigate to `http://localhost:3000`
 
 ## 📱 Usage
 
@@ -59,7 +67,7 @@ npm run dev
 - Responsive design adapts to different screen sizes
 
 ### Book Data
-Books are stored in `src/books.json` with the following structure:
+Books are stored in `app/mocks/books.json` with the following structure:
 ```json
 {
   "id": "1",
@@ -78,14 +86,21 @@ Books are stored in `src/books.json` with the following structure:
 ```
 bookie/
 ├── public/
-├── src/
-│   ├── screens/
-│   │   └── landing/
-│   │       └── Navbar.jsx    # Navigation component
-│   ├── books.json            # Book data
-│   ├── App.jsx              # Main app component
-│   ├── index.css            # Global styles
-│   └── main.jsx             # Entry point
+├── app/
+│   ├── book/
+│   │   └── [id]/
+│   │       └── page.jsx     # Dynamic book detail page
+│   ├── favorites/
+│   │   └── page.jsx         # Favorites page
+│   ├── mocks/
+│   │   └── books.json       # Book data
+│   ├── layout.jsx           # Root layout
+│   ├── page.jsx             # Homepage
+│   └── globals.css          # Global styles
+├── components/              # Reusable components
+│   ├── Navigation/
+│   ├── BookCard/
+│   └── ...
 ├── package.json
 └── README.md
 ```
@@ -101,7 +116,7 @@ The app uses Tailwind CSS for styling with a custom color scheme:
 
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
-- `npm run preview` - Preview production build
+- `npm start` - Start production server
 - `npm run lint` - Run ESLint
 
 ## 🔮 Future Features
@@ -121,6 +136,7 @@ The app uses Tailwind CSS for styling with a custom color scheme:
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
 
 ## 📝 License
 
