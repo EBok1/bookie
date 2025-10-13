@@ -5,13 +5,13 @@ import BookCardGrid from "../../components/BookCardGrid/BookCardGrid";
 function BookOverviewPage() {
   return (
     <>
-      <div className="mt-4 md:flex md:mx-4 lg:mx-12">
+      <div className="md:flex md:mx-4 lg:mx-12 md:items-center md:mt-5 md:mb-0 text-center mt-7 mb-7 2xl:justify-center">
         <div>
-          <h1 className="text-center text-[2.5rem] leading-tight font-playfair mb-4 mx-4">
+          <h1 className="text-[2.5rem] leading-tight font-playfair mb-4 mx-4">
             Welcome to Bookie
           </h1>
 
-          <div className="text-center max-w-2xl mx-auto px-8">
+          <div className="max-w-2xl mx-auto px-8">
             <p className="text-xl mb-4 font-semibold text-[#A55A16]">
               Your personal reading companion awaits!
             </p>
@@ -28,7 +28,7 @@ function BookOverviewPage() {
         <img
           src="/front-page.png"
           alt="Image of drawn books"
-          className="h-auto w-screen md:w-[60%] hidden md:block"
+          className="h-auto w-screen md:w-[60%] hidden md:block xl:w-[58%] 2xl:w-[40%]"
         />
       </div>
       <h2 className="text-2xl font-bold mt-6 mb-2 mx-4 flex justify-center font-playfair">
