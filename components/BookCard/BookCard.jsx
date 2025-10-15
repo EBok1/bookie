@@ -16,7 +16,7 @@ function BookCard({ book }) {
           {book.title}
         </h3>
         <p className="text-gray-600 mt-4 mb-2">{book.author}</p>
-        <div className="flex justify-between">
+        <div className="flex justify-between flex-wrap gap-4">
           <p>
             <BookTag tag={book.genre} variant="green" />
           </p>
