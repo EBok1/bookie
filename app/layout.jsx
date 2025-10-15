@@ -1,5 +1,7 @@
 import "./globals.css";
 
+import Navigation from "../components/Navigation/Navigation";
+
 export const metadata = {
   title: "Bookie",
   description: "Your personal reading companion",
@@ -21,7 +23,11 @@ export default function RootLayout({ children }) {
         />
         <link rel="icon" type="image/png" href="/logo.png" />
       </head>
-      <body suppressHydrationWarning={true}>{children}</body>
+      <body suppressHydrationWarning={true}>
+        <Navigation />
+
+        {children}
+      </body>
     </html>
   );
 }

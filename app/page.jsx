@@ -1,12 +1,12 @@
-import booksData from "./mocks/books.json";
 import BookCard from "../components/BookCard/BookCard";
 import BookCardGrid from "../components/BookCardGrid/BookCardGrid";
-import Navigation from "../components/Navigation/Navigation";
+import fetchBooks from "./hooks/fetchBooks";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { data: booksData } = await fetchBooks();
+
   return (
     <>
-      <Navigation />
       <div className="md:flex md:mx-4 lg:mx-12 md:items-center md:mt-5 md:mb-0 text-center mt-7 mb-7 2xl:justify-center">
         <div>
           <h1 className="text-[2.5rem] leading-tight font-playfair mb-4 mx-4">
@@ -39,7 +39,7 @@ export default function HomePage() {
         Featured Books
       </h2>
       <BookCardGrid>
-        {booksData.map((book) => (
+        {booksData?.map((book) => (
           <BookCard key={book.id} book={book} />
         ))}
       </BookCardGrid>
