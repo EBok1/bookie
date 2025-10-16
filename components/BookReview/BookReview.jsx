@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useParams, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { validateForm } from "./utils/validateForm";
 import { addReviewToList } from "./utils/addReviewToList";
 import { deleteReview } from "./utils/deleteReview";
@@ -9,6 +10,7 @@ import { supabase } from "../../app/supabaseClient";
 
 function BookReview({ reviewData }) {
   const params = useParams();
+  const router = useRouter();
   const [rating, setRating] = useState();
   const [bookCommentsById, setBookCommentsById] = useState(reviewData || []);
   const [reviewerName, setReviewerName] = useState("");
@@ -60,6 +62,7 @@ function BookReview({ reviewData }) {
     setRating();
     setBookCommentsById([...bookCommentsById, reviewData]);
     setIssubmitting(false);
+    router.refresh(); // Refresh to update average rating
     setTimeout(() => setSubmitMessage(""), 5000);
   }
 
@@ -72,7 +75,10 @@ function BookReview({ reviewData }) {
     }
 
     setDeleteMessage("Review is deleted succesfully.");
-    setBookCommentsById(bookCommentsById.filter(review => review.id !== reviewId));
+    setBookCommentsById(
+      bookCommentsById.filter((review) => review.id !== reviewId)
+    );
+    router.refresh(); // Refresh to update average rating
     setTimeout(() => setDeleteMessage(""), 5000);
   }
 
@@ -120,10 +126,12 @@ function BookReview({ reviewData }) {
       setEditMessage("Review updated successfully!");
       setEditingReviewId(null);
       setEditValues({});
-      setBookCommentsById(bookCommentsById.map(review => 
-        review.id === reviewId 
-          ? { ...review, ...editValues }  
-          : review   ));
+      setBookCommentsById(
+        bookCommentsById.map((review) =>
+          review.id === reviewId ? { ...review, ...editValues } : review
+        )
+      );
+      router.refresh(); // Refresh to update average rating
       setTimeout(() => setEditMessage(""), 5000);
     } catch (err) {
       console.error("❌ Save edit catch error:", err);
@@ -212,6 +220,14 @@ function BookReview({ reviewData }) {
               <p className="text-white text-sm">{deleteMessage}</p>
             )}
           </div>
+          <div
+            className={`fixed top-0 left-0 right-0 bg-green-500 text-white p-3 text-center z-50 transition-transform duration-300 md:hidden ${
+              editMessage ? "translate-y-0" : "-translate-y-full"
+            }`}
+          >
+            {" "}
+            {editMessage && <p className="text-white text-sm">{editMessage}</p>}
+          </div>
           <div>
             {[0, 1, 2, 3, 4, 5].map((filterOption) => (
               <button
@@ -237,12 +253,14 @@ function BookReview({ reviewData }) {
               {deleteMessage}
             </div>
           )}
+          {editMessage && (
+            <p className="hidden md:block bg-green-100 text-green-800 px-3 py-2 rounded-md text-sm">
+              {editMessage}
+            </p>
+          )}
         </div>
 
         <div>
-          {editMessage && (
-            <p className="text-green-500 text-sm mt-2">{editMessage}</p>
-          )}
           {bookCommentsById
             .filter((review) => {
               if (filterReview === 0) {
@@ -335,22 +353,30 @@ function BookReview({ reviewData }) {
                     >
                       Delete
                     </button>
-                    <div popover="auto" id={`delete-popover-${review.id}`}>
-                      Are you sure you want to delete this review?
-                      <button
-                        onClick={() => handleDeleteReview(review.id)}
-                        className="bg-[#f1a9ae] text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1"
-                      >
-                        Delete
-                      </button>
-                      <button
-                        popoverTarget={`delete-popover-${review.id}`}
-                        popoverTargetAction="hide"
-                        onClick={() => cancelEditing()}
-                        className="bg-[#f1a9ae] text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1 m-1"
-                      >
-                        Cancel
-                      </button>
+                    <div
+                      popover="auto"
+                      id={`delete-popover-${review.id}`}
+                      className="border border-gray-300 bg-gray-100 rounded-md p-4 w-auto h-80 mx-9 shadow-md bg-opacity-90"
+                    >
+                      <p className="flex justify-center">
+                        Are you sure you want to delete this review?
+                      </p>
+                      <div className="flex justify-center mt-4">
+                        <button
+                          onClick={() => handleDeleteReview(review.id)}
+                          className="bg-[#f1a9ae] text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1"
+                        >
+                          Delete
+                        </button>
+                        <button
+                          popoverTarget={`delete-popover-${review.id}`}
+                          popoverTargetAction="hide"
+                          onClick={() => cancelEditing()}
+                          className="bg-white text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1 ml-5"
+                        >
+                          Cancel
+                        </button>
+                      </div>
                     </div>
                   </>
                 )}
