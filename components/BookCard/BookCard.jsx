@@ -2,6 +2,7 @@ import Link from "next/link";
 import LikeButton from "../FavoriteButton/FavoriteButton";
 import FallbackImage from "../FallbackImage/FallbackImage";
 import BookTag from "../BookTag/BookTag";
+import { AverageBookRating } from "../AverageBookRating/AverageBookRating";
 
 function BookCard({ book }) {
   return (
@@ -16,6 +17,7 @@ function BookCard({ book }) {
           {book.title}
         </h3>
         <p className="text-gray-600 mt-4 mb-2">{book.author}</p>
+        <AverageBookRating averageRating={book.calculatedAverage}/>
         <div className="flex justify-between flex-wrap gap-4">
           <p>
             <BookTag tag={book.genre} variant="green" />
