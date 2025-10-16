@@ -4,12 +4,24 @@ import BookReview from "../../../components/BookReview/BookReview";
 import ReturnButton from "../../../components/ReturnButton/ReturnButton";
 import BookDetails from "../../../components/BookDetails/BookDetails";
 import BookTag from "../../../components/BookTag/BookTag";
+import { AverageBookRating } from "../../../components/AverageBookRating/AverageBookRating";
 import Image from "next/image";
 
 export default async function BookDetailPage(props) {
   const { id } = await props.params;
   const { data: bookData } = await fetchBookById(id);
   const { data: reviewData } = await fetchBookCommentsById(id);
+
+  let averageRating;
+  if (reviewData.length === 0) {
+    averageRating = "No average rating.";
+  } else {
+    const sum = reviewData.reduce(
+      (accumulator, currentValue) => accumulator + currentValue.rating,
+      0
+    );
+    averageRating = Math.round((sum / reviewData.length) * 10) / 10;
+  }
 
   if (!bookData.title) {
     return (
@@ -47,6 +59,7 @@ export default async function BookDetailPage(props) {
             <span>
               <BookTag tag={bookData.genre} variant="orange" />
             </span>
+            <AverageBookRating averageRating={averageRating} />
             <h3 className="text-xl font-bold text-gray-800 mb-2 font-playfair">
               Description
             </h3>
@@ -74,7 +87,7 @@ export default async function BookDetailPage(props) {
             </div>
           </div>
         </div>
-        <BookReview reviewData={reviewData}/>
+        <BookReview reviewData={reviewData} />
       </div>
     </>
   );
