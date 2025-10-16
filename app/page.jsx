@@ -1,9 +1,36 @@
 import BookCard from "../components/BookCard/BookCard";
 import BookCardGrid from "../components/BookCardGrid/BookCardGrid";
 import fetchBooks from "./hooks/fetchBooks";
+import fetchAllReviews from "./hooks/fetchAllReviews";
 
 export default async function HomePage() {
   const { data: booksData } = await fetchBooks();
+  const { data: allReviewsData } = await fetchAllReviews();
+
+  const reviewsByBook = allReviewsData.reduce((accumulator, currentValue) => {
+    const bookId = currentValue.book_id;
+    if (!accumulator[bookId]) {
+      accumulator[bookId] = [];
+    }
+    accumulator[bookId].push(currentValue);
+    return accumulator;
+  }, {});
+
+  const enhancedBooksData = booksData.map((book) => {
+    const bookReviews = reviewsByBook[book.id] || [];
+
+    let averageRating;
+    if (bookReviews.length === 0) {
+      averageRating = "Not available";
+    } else {
+      const sum = bookReviews.reduce(
+        (accumulator, currentValue) => accumulator + currentValue.rating,
+        0
+      );
+      averageRating = Math.round((sum / bookReviews.length) * 10) / 10;
+    }
+    return { ...book, calculatedAverage: averageRating };
+  });
 
   return (
     <>
@@ -39,8 +66,12 @@ export default async function HomePage() {
         Featured Books
       </h2>
       <BookCardGrid>
-        {booksData?.map((book) => (
-          <BookCard key={book.id} book={book} />
+        {enhancedBooksData?.map((book) => (
+          <BookCard
+            key={book.id}
+            book={book}
+            averageRating={book.calculatedAverage}
+          />
         ))}
       </BookCardGrid>
     </>
