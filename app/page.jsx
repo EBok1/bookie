@@ -2,6 +2,7 @@ import BookCard from "../components/BookCard/BookCard";
 import BookCardGrid from "../components/BookCardGrid/BookCardGrid";
 import fetchBooks from "./hooks/fetchBooks";
 import fetchAllReviews from "./hooks/fetchAllReviews";
+import { AddNewBook } from "../components/AddNewBook/AddNewBook";
 
 export default async function HomePage() {
   const { data: booksData } = await fetchBooks();
@@ -63,8 +64,9 @@ export default async function HomePage() {
         />
       </div>
       <h2 className="text-2xl font-bold mt-6 mb-2 mx-4 flex justify-center font-playfair">
-        Featured Books
+        All Books
       </h2>
+      <AddNewBook /> 
       <BookCardGrid>
         {enhancedBooksData?.map((book) => (
           <BookCard
