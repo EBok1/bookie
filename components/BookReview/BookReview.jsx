@@ -15,7 +15,7 @@ function BookReview({ reviewData }) {
   const [bookCommentsById, setBookCommentsById] = useState(reviewData || []);
   const [reviewerName, setReviewerName] = useState("");
   const [reviewerComment, setReviewerComment] = useState("");
-  const [errormessage, setErrorMessage] = useState({});
+  const [errorMessage, setErrorMessage] = useState({});
   const [isSubmitting, setIssubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
   const [deleteMessage, setDeleteMessage] = useState("");
@@ -35,7 +35,7 @@ function BookReview({ reviewData }) {
     setErrorMessage({});
     setSubmitMessage("");
 
-    const errors = validateForm(rating, reviewerName, reviewerComment);
+    const errors = validateForm({rating, reviewerName, reviewerComment});
     if (Object.keys(errors).length > 0) {
       setErrorMessage(errors);
       return;
@@ -148,8 +148,8 @@ function BookReview({ reviewData }) {
 
         <StarRating rating={rating} onRatingChange={setRating} />
 
-        {errormessage.rating && (
-          <p className="text-red-500 text-sm mt-2">{errormessage.rating}</p>
+        {errorMessage.rating && (
+          <p className="text-red-500 text-sm mt-2">{errorMessage.rating}</p>
         )}
 
         {submitMessage && (
@@ -161,16 +161,16 @@ function BookReview({ reviewData }) {
             type="text"
             placeholder="Name*"
             className={`w-full mb-2 p-1 border-2 rounded-md ${
-              errormessage.reviewerName ? "border-pink-500" : "border-[#bccdbc]"
+              errorMessage.reviewerName ? "border-pink-500" : "border-[#bccdbc]"
             } focus:border-blue-500`}
             value={reviewerName}
             onChange={(e) => setReviewerName(e.target.value)}
             required
           />
 
-          {errormessage.reviewerName && (
+          {errorMessage.reviewerName && (
             <p className="text-red-500 text-sm mb-2">
-              {errormessage.reviewerName}
+              {errorMessage.reviewerName}
             </p>
           )}
 
@@ -178,7 +178,7 @@ function BookReview({ reviewData }) {
             type="text"
             placeholder="Leave a review*"
             className={`w-full mb-2 p-1 border-2 rounded-md ${
-              errormessage.reviewerComment
+              errorMessage.reviewerComment
                 ? "border-pink-500"
                 : "border-[#bccdbc]"
             } focus:border-blue-500`}
@@ -188,9 +188,9 @@ function BookReview({ reviewData }) {
             maxLength="50"
           />
 
-          {errormessage.reviewerComment && (
+          {errorMessage.reviewerComment && (
             <p className="text-red-500 text-sm mb-2">
-              {errormessage.reviewerComment}
+              {errorMessage.reviewerComment}
             </p>
           )}
 
