@@ -1,9 +1,6 @@
-import Navigation from "../../components/Navigation/Navigation";
-
 const AboutPage = () => {
   return (
     <>
-      <Navigation />
       <div>
         <div className="max-w-4xl mx-auto px-6 py-12">
           {/* Header Section */}
