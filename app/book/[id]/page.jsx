@@ -56,11 +56,11 @@ export default async function BookDetailPage(props) {
               {bookData.title}
             </h1>
             <h2 className="text-xl text-gray-600 mb-2">by {bookData.author}</h2>
+            <AverageBookRating averageRating={averageRating} />
             <span>
               <BookTag tag={bookData.genre} variant="orange" />
             </span>
-            <AverageBookRating averageRating={averageRating} />
-            <h3 className="text-xl font-bold text-gray-800 mb-2 font-playfair">
+            <h3 className="text-xl font-bold text-gray-800 mb-2 font-playfair mt-8">
               Description
             </h3>
             <p className="leading-relaxed mb-8">{bookData.description}</p>
@@ -92,15 +92,3 @@ export default async function BookDetailPage(props) {
     </>
   );
 }
-
-// export default BookDetailPage;
-
-// export async function getServerSideProps() {
-//   try {
-//     const data = fetchBookById({ id: params.id });
-//     return{props: {books: data}}
-//   }
-//   catch {
-//     return{props: {books: []}}
-//   }
-// }
