@@ -1,4 +1,3 @@
-import fetchBookById from "../../hooks/fetchBookById";
 import fetchBookCommentsById from "../../hooks/fetchBookCommentsById";
 import BookReview from "../../../components/BookReview/BookReview";
 import ReturnButton from "../../../components/ReturnButton/ReturnButton";
@@ -9,7 +8,8 @@ import Image from "next/image";
 
 export default async function BookDetailPage(props) {
   const { id } = await props.params;
-  const { data: bookData } = await fetchBookById(id);
+  const response = await fetch(`http://localhost:3000/api/books/${id}`);
+  const { data: bookData } = await response.json();
   const { data: reviewData } = await fetchBookCommentsById(id);
 
   let averageRating;
