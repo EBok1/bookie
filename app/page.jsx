@@ -1,10 +1,10 @@
 import BookCard from "../components/BookCard/BookCard";
 import BookCardGrid from "../components/BookCardGrid/BookCardGrid";
-import fetchBooks from "./hooks/fetchBooks";
 import { FloatingButton } from "../components/FloatingButton/FloatingButton";
 
 export default async function HomePage() {
-  const { data: booksData } = await fetchBooks();
+  const response = await fetch("http://localhost:3000/api/books");
+  const { data: booksData } = await response.json();
   const commentsResponse = await fetch("http://localhost:3000/api/comments");
   const { data: allReviewsData } = await commentsResponse.json();
 
@@ -75,9 +75,7 @@ export default async function HomePage() {
           />
         ))}
       </BookCardGrid>
-      <FloatingButton >
-        +Add Book
-      </FloatingButton>
+      <FloatingButton>+Add Book</FloatingButton>
     </>
   );
 }
