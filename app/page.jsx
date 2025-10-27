@@ -1,12 +1,12 @@
 import BookCard from "../components/BookCard/BookCard";
 import BookCardGrid from "../components/BookCardGrid/BookCardGrid";
 import fetchBooks from "./hooks/fetchBooks";
-import fetchAllReviews from "./hooks/fetchAllReviews";
-import { AddNewBook } from "../components/AddNewBook/AddNewBook";
+import { FloatingButton } from "../components/FloatingButton/FloatingButton";
 
 export default async function HomePage() {
   const { data: booksData } = await fetchBooks();
-  const { data: allReviewsData } = await fetchAllReviews();
+  const commentsResponse = await fetch("http://localhost:3000/api/comments");
+  const { data: allReviewsData } = await commentsResponse.json();
 
   const reviewsByBook = allReviewsData.reduce((accumulator, currentValue) => {
     const bookId = currentValue.book_id;
@@ -66,7 +66,6 @@ export default async function HomePage() {
       <h2 className="text-2xl font-bold mt-6 mb-2 mx-4 flex justify-center font-playfair">
         All Books
       </h2>
-      <AddNewBook /> 
       <BookCardGrid>
         {enhancedBooksData?.map((book) => (
           <BookCard
@@ -76,6 +75,9 @@ export default async function HomePage() {
           />
         ))}
       </BookCardGrid>
+      <FloatingButton >
+        +Add Book
+      </FloatingButton>
     </>
   );
 }

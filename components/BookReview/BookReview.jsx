@@ -3,10 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { validateForm } from "./utils/validateForm";
-import { addReviewToList } from "./utils/addReviewToList";
-import { deleteReview } from "./utils/deleteReview";
 import StarRating from "../StarRating/StarRating";
-import { supabase } from "../../app/supabaseClient";
 
 function BookReview({ reviewData }) {
   const params = useParams();
@@ -35,7 +32,7 @@ function BookReview({ reviewData }) {
     setErrorMessage({});
     setSubmitMessage("");
 
-    const errors = validateForm({rating, reviewerName, reviewerComment});
+    const errors = validateForm({ rating, reviewerName, reviewerComment });
     if (Object.keys(errors).length > 0) {
       setErrorMessage(errors);
       return;
@@ -49,8 +46,13 @@ function BookReview({ reviewData }) {
       rating: rating,
     };
 
-    const { error } = await addReviewToList(reviewData);
-    if (error) {
+    const response = await fetch("/api/comments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(reviewData),
+    });
+    const result = await response.json();
+    if (result.error) {
       setSubmitMessage("Something went wrong. Please try again.");
       setIssubmitting(false);
       return;
@@ -60,16 +62,20 @@ function BookReview({ reviewData }) {
     setReviewerName("");
     setReviewerComment("");
     setRating();
-    setBookCommentsById([...bookCommentsById, reviewData]);
+    if (result.data && result.data[0]) {
+      setBookCommentsById([...bookCommentsById, result.data[0]]);
+    }
     setIssubmitting(false);
     router.refresh(); // Refresh to update average rating
     setTimeout(() => setSubmitMessage(""), 5000);
   }
 
   async function handleDeleteReview(reviewId) {
-    const { error } = await deleteReview(reviewId);
-
-    if (error) {
+    const response = await fetch(`/api/comments/${reviewId}`, {
+      method: "DELETE",
+    });
+    const result = await response.json();
+    if (result.error) {
       setDeleteMessage("Something went wrong. Please try again.");
       return;
     }
@@ -97,28 +103,16 @@ function BookReview({ reviewData }) {
   }
 
   async function saveEdit(reviewId) {
-    if (!supabase) {
-      console.error("❌ Supabase client not initialized for saveEdit");
-      setEditMessage(
-        "Database connection not available. Please check configuration."
-      );
-      return;
-    }
-
     try {
-      const { error } = await supabase
-        .from("comments")
-        .update({
-          reviewer: editValues.reviewer,
-          comment: editValues.comment,
-          rating: editValues.rating,
-        })
-        .eq("id", reviewId);
-
-      console.log("✅ Save edit result:", { error });
-
-      if (error) {
-        console.error("❌ Save edit Supabase error:", error);
+      const response = await fetch(`/api/comments/${reviewId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editValues),
+      });
+      const result = await response.json();
+      console.log("✅ Save edit result:", { result });
+      if (result.error) {
+        console.error("❌ Save edit Supabase error:", result.error);
         setEditMessage("Something went wrong. Please try again.");
         return;
       }

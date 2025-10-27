@@ -16,34 +16,39 @@ export function validateForm({ rating, reviewerName, reviewerComment }) {
 }
 
 export function validateBook({
-  bookTitle,
-  bookAuthor,
-  bookIsbn,
-  bookGenre,
-  bookLanguage,
+  title,
+  author,
+  isbn,
+  genre,
+  language,
+  publishedYear,
 }) {
 
   const newErrors = {};
-  
-  if (!bookTitle?.trim()) {
-    newErrors.bookTitle = "Please enter a title.";
+
+  if (!title?.trim()) {
+    newErrors.title = "Please enter a title.";
   }
 
-  if (!bookAuthor?.trim()) {
-    newErrors.bookAuthor = "Please enter a Author.";
+  if (!author?.trim()) {
+    newErrors.author = "Please enter a Author.";
   }
 
-  if (!bookIsbn?.trim()) {
-    newErrors.bookIsbn =
+  if (!isbn?.trim()) {
+    newErrors.isbn =
       "Please enter ISBN. If you don't have a ISBN please enter a -.";
   }
 
-  if (!bookGenre) {
-    newErrors.bookGenre = "Select a genre.";
+  if (!genre) {
+    newErrors.genre = "Select a genre.";
   }
 
-  if (!bookLanguage) {
-    newErrors.bookLanguage = "Fill in a language.";
+  if (!language) {
+    newErrors.language = "Fill in a language.";
+  }
+
+  if (!publishedYear) {
+    newErrors.publishedYear = "Fill in a year.";
   }
 
   return newErrors;
