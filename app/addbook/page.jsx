@@ -39,10 +39,15 @@ const AddBookPage = () => {
 
     console.log({ newBook });
 
-    const { error } = await supabase.from("books").insert(newBook);
+    const response = await fetch("/api/books", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newBook),
+    });
+    const result = await response.json();
 
-    if (error) {
-      console.error("Database error:", error);
+    if (result.error) {
+      console.error("Database error:", result.error);
       setSubmitMessage("Something went wrong. Please try again.");
       setIsSubmitting(false);
       return;
