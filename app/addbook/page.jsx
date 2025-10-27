@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { validateBook } from "../../components/BookReview/utils/validateForm";
-import { supabase } from "../../app/supabaseClient";
 import { useRouter } from "next/navigation";
 import { createBookObject, clearFormFields } from "./utils/formHelpers";
 import { useGenres } from "./hooks/useGenres";
