@@ -25,7 +25,6 @@ export const createBookObject = ({
     rating: null,
     status: "read",
     dateAdded: date,
-    id: Date.now(),
   };
 };
 
