@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { supabase } from "../../../app/supabaseClient";
 
 export const useGenres = () => {
   const [availableGenres, setAvailableGenres] = useState([]);
@@ -16,15 +15,9 @@ export const useGenres = () => {
         return;
       }
 
-      const { data: booksData, error } = await supabase
-        .from("books")
-        .select("genre");
-
-      if (error) throw error;
-
-      const uniqueGenres = [...new Set(booksData.map((book) => book.genre))]
-        .filter((genre) => genre)
-        .sort();
+      const response = await fetch('/api/genres');
+      const result = await response.json();
+      const uniqueGenres = result.genres;
 
       setAvailableGenres(uniqueGenres);
       setGenresCache(uniqueGenres);
