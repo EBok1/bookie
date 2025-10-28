@@ -3,9 +3,10 @@ import BookCardGrid from "../components/BookCardGrid/BookCardGrid";
 import { FloatingButton } from "../components/FloatingButton/FloatingButton";
 
 export default async function HomePage() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/books`);
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const response = await fetch(`${baseUrl}/api/books`);
   const { data: booksData } = await response.json();
-  const commentsResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/comments`);
+  const commentsResponse = await fetch(`${baseUrl}/api/comments`);
   const { data: allReviewsData } = await commentsResponse.json();
 
   const reviewsByBook = allReviewsData.reduce((accumulator, currentValue) => {
