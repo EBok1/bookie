@@ -1,14 +1,24 @@
 import { supabase } from "../../supabaseClient";
 
-export async function GET() {
+export async function GET(request) {
   if (!supabase) {
     console.error(
       "❌ Supabase client not initialized. Check your environment variables."
     );
     return Response.json({ data: [] });
   }
+
   try {
-    const { data, error } = await supabase.from("comments").select();
+    const { searchParams } = new URL(request.url);
+    const bookId = searchParams.get("bookId");
+
+    let query = supabase.from("comments").select();
+
+    if (bookId) {
+      query = query.eq("book_id", bookId);
+    }
+
+    const { data, error } = await query;
 
     console.log("✅ Get comments result", ":", { data, error });
     return Response.json({ data: data || [] });
