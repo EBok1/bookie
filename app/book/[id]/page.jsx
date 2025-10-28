@@ -4,12 +4,15 @@ import BookDetails from "../../../components/BookDetails/BookDetails";
 import BookTag from "../../../components/BookTag/BookTag";
 import { AverageBookRating } from "../../../components/AverageBookRating/AverageBookRating";
 import Image from "next/image";
+import { BookActions } from "../../../components/BookActions/BookActions";
 
 export default async function BookDetailPage(props) {
   const { id } = await props.params;
   const response = await fetch(`http://localhost:3000/api/books/${id}`);
   const { data: bookData } = await response.json();
-  const reviewResponse = await fetch(`http://localhost:3000/api/comments?bookId=${id}`);
+  const reviewResponse = await fetch(
+    `http://localhost:3000/api/comments?bookId=${id}`
+  );
   const { data: reviewData } = await reviewResponse.json();
 
   let averageRating;
@@ -56,15 +59,24 @@ export default async function BookDetailPage(props) {
               {bookData.title}
             </h1>
             <h2 className="text-xl text-gray-600 mb-2">by {bookData.author}</h2>
+
             <AverageBookRating averageRating={averageRating} />
-            <span>
-              <BookTag tag={bookData.genre} variant="orange" />
-            </span>
+
+            <div className="mt-2">
+              <span>
+                <BookTag tag={bookData.genre} variant="orange" />
+              </span>
+            </div>
+
+            <BookActions bookData={bookData} />
+
             <h3 className="text-xl font-bold text-gray-800 mb-2 font-playfair mt-8">
               Description
             </h3>
             <p className="leading-relaxed mb-8">{bookData.description}</p>
+
             <BookDetails bookData={bookData} />
+
             <h3 className="text-xl font-bold text-gray-800 mt-8 mb-2 font-playfair">
               Tags
             </h3>
@@ -87,6 +99,7 @@ export default async function BookDetailPage(props) {
             </div>
           </div>
         </div>
+
         <BookReview reviewData={reviewData} />
       </div>
     </>
