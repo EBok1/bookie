@@ -3,7 +3,7 @@ import BookCardGrid from "../components/BookCardGrid/BookCardGrid";
 import { FloatingButton } from "../components/FloatingButton/FloatingButton";
 
 export default async function HomePage() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const response = await fetch(`${baseUrl}/api/books`);
   const { data: booksData } = await response.json();
   const commentsResponse = await fetch(`${baseUrl}/api/comments`);
