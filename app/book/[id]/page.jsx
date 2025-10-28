@@ -15,7 +15,8 @@ export default async function BookDetailPage(props) {
     .from("books")
     .select()
     .eq("id", id);
-  const bookData = bookDataArray && bookDataArray.length > 0 ? bookDataArray[0] : null;
+  const bookData =
+    bookDataArray && bookDataArray.length > 0 ? bookDataArray[0] : null;
 
   // Fetch comments directly from Supabase (server-side)
   const { data: reviewData } = await supabase

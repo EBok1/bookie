@@ -6,18 +6,21 @@ import { supabase } from "./supabaseClient";
 export default async function HomePage() {
   // Fetch books directly from Supabase (server-side)
   const { data: booksData } = await supabase.from("books").select();
-  
+
   // Fetch all comments directly from Supabase (server-side)
   const { data: allReviewsData } = await supabase.from("comments").select();
 
-  const reviewsByBook = (allReviewsData || []).reduce((accumulator, currentValue) => {
-    const bookId = currentValue.book_id;
-    if (!accumulator[bookId]) {
-      accumulator[bookId] = [];
-    }
-    accumulator[bookId].push(currentValue);
-    return accumulator;
-  }, {});
+  const reviewsByBook = (allReviewsData || []).reduce(
+    (accumulator, currentValue) => {
+      const bookId = currentValue.book_id;
+      if (!accumulator[bookId]) {
+        accumulator[bookId] = [];
+      }
+      accumulator[bookId].push(currentValue);
+      return accumulator;
+    },
+    {}
+  );
 
   const enhancedBooksData = (booksData || []).map((book) => {
     const bookReviews = reviewsByBook[book.id] || [];
