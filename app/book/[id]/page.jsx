@@ -5,18 +5,26 @@ import BookTag from "../../../components/BookTag/BookTag";
 import { AverageBookRating } from "../../../components/AverageBookRating/AverageBookRating";
 import Image from "next/image";
 import { BookActions } from "../../../components/BookActions/BookActions";
+import { supabase } from "../../supabaseClient";
 
 export default async function BookDetailPage(props) {
   const { id } = await props.params;
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  const response = await fetch(`${baseUrl}/api/books/${id}`);
-  const { data: bookData } = await response.json();
-  const reviewResponse = await fetch(`${baseUrl}/api/comments?bookId=${id}`);
-  const { data: reviewData } = await reviewResponse.json();
+  // Fetch book directly from Supabase (server-side)
+  const { data: bookDataArray } = await supabase
+    .from("books")
+    .select()
+    .eq("id", id);
+  const bookData = bookDataArray && bookDataArray.length > 0 ? bookDataArray[0] : null;
+
+  // Fetch comments directly from Supabase (server-side)
+  const { data: reviewData } = await supabase
+    .from("comments")
+    .select()
+    .eq("book_id", id);
 
   let averageRating;
-  if (reviewData.length === 0) {
+  if (!reviewData || reviewData.length === 0) {
     averageRating = "No average rating.";
   } else {
     const sum = reviewData.reduce(
@@ -100,7 +108,7 @@ export default async function BookDetailPage(props) {
           </div>
         </div>
 
-        <BookReview reviewData={reviewData} />
+        <BookReview reviewData={reviewData || []} />
       </div>
     </>
   );

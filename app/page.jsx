@@ -1,15 +1,16 @@
 import BookCard from "../components/BookCard/BookCard";
 import BookCardGrid from "../components/BookCardGrid/BookCardGrid";
 import { FloatingButton } from "../components/FloatingButton/FloatingButton";
+import { supabase } from "./supabaseClient";
 
 export default async function HomePage() {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-  const response = await fetch(`${baseUrl}/api/books`);
-  const { data: booksData } = await response.json();
-  const commentsResponse = await fetch(`${baseUrl}/api/comments`);
-  const { data: allReviewsData } = await commentsResponse.json();
+  // Fetch books directly from Supabase (server-side)
+  const { data: booksData } = await supabase.from("books").select();
+  
+  // Fetch all comments directly from Supabase (server-side)
+  const { data: allReviewsData } = await supabase.from("comments").select();
 
-  const reviewsByBook = allReviewsData.reduce((accumulator, currentValue) => {
+  const reviewsByBook = (allReviewsData || []).reduce((accumulator, currentValue) => {
     const bookId = currentValue.book_id;
     if (!accumulator[bookId]) {
       accumulator[bookId] = [];
@@ -18,7 +19,7 @@ export default async function HomePage() {
     return accumulator;
   }, {});
 
-  const enhancedBooksData = booksData.map((book) => {
+  const enhancedBooksData = (booksData || []).map((book) => {
     const bookReviews = reviewsByBook[book.id] || [];
 
     let averageRating;
