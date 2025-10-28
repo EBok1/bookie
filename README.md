@@ -25,11 +25,29 @@ A modern book management and discovery app featuring popular BookTok fantasy and
 
 - **Next.js 15** - React framework with App Router and server components
 - **React 19** - Modern React with hooks and state management  
-- **Supabase** - Database, authentication, and real-time subscriptions
+- **Supabase** - Database with secure server-side access
+- **REST API** - Custom API routes for all data operations
 - **Tailwind CSS** - Utility-first CSS framework with custom design system
 - **ESLint** - Code linting for quality assurance
 - **Font Awesome** - Icons and UI enhancements
 - **LocalStorage API** - Client-side data persistence for favorites
+
+## Security Architecture
+
+This application implements a secure architecture with complete separation between client and database:
+
+- **Server-Side Data Access**: All Supabase operations happen on the server through API routes
+- **Protected Credentials**: Database credentials never exposed to the browser
+- **REST API Layer**: Custom Next.js API routes handle all data operations
+- **Input Validation**: Server-side validation for all incoming data
+- **No Direct Database Calls**: Client components cannot access Supabase directly
+- **Secure by Design**: Environment variables kept server-side only
+
+This architecture ensures that even if someone inspects the browser console, they cannot:
+- See database credentials
+- Make direct database queries
+- Bypass server-side validation
+- Access unauthorized data
 
 ## Getting Started
 
@@ -99,6 +117,24 @@ npm run dev
 - **Desktop**: Access menu items from the top navigation bar
 - **Responsive**: Interface adapts automatically to screen size
 
+### API Architecture
+All data operations go through secure REST API endpoints:
+
+**Books:**
+- `GET /api/books` - Fetch all books
+- `POST /api/books` - Create new book
+- `GET /api/books/:id` - Fetch single book by ID
+
+**Comments/Reviews:**
+- `GET /api/comments` - Fetch all comments
+- `GET /api/comments?bookId=:id` - Fetch comments for specific book
+- `POST /api/comments` - Create new comment
+- `PUT /api/comments/:id` - Update comment
+- `DELETE /api/comments/:id` - Delete comment
+
+**Genres:**
+- `GET /api/genres` - Fetch unique genres from all books
+
 ### Database
 Books and reviews are stored in **Supabase** with the following structure:
 
@@ -158,26 +194,37 @@ bookie/
 ├── app/
 │   ├── about/
 │   │   └── page.jsx        # About page
+│   ├── addbook/
+│   │   ├── hooks/
+│   │   │   ├── useBookForm.js  # Book form state management
+│   │   │   └── useGenres.js    # Genre fetching hook
+│   │   ├── utils/
+│   │   │   └── formHelpers.js  # Form utilities
+│   │   └── page.jsx        # Add new book page
+│   ├── api/                # REST API Routes
+│   │   ├── books/
+│   │   │   ├── [id]/
+│   │   │   │   └── route.js    # GET /api/books/:id
+│   │   │   └── route.js        # GET, POST /api/books
+│   │   ├── comments/
+│   │   │   ├── [id]/
+│   │   │   │   └── route.js    # PUT, DELETE /api/comments/:id
+│   │   │   └── route.js        # GET, POST /api/comments
+│   │   └── genres/
+│   │       └── route.js    # GET /api/genres
 │   ├── book/
 │   │   └── [id]/
 │   │       └── page.jsx    # Dynamic book detail pages
 │   ├── favorites/
 │   │   ├── FavoritesList.jsx # Favorites list component
 │   │   └── page.jsx        # User favorites page
-│   ├── hooks/              # Server-side data fetching
-│   │   ├── fetchAllReviews.js
-│   │   ├── fetchBookById.js
-│   │   ├── fetchBookCommentsById.js
-│   │   └── fetchBooks.js
 │   ├── mocks/
-│   │   └── books.json      # Sample data (now uses Supabase)
+│   │   └── books.json      # Sample data (now uses API)
 │   ├── globals.css         # Global styles
 │   ├── layout.jsx          # Root layout component
 │   ├── page.jsx            # Homepage with book grid
 │   └── supabaseClient.js   # Database configuration
 ├── components/             # Reusable UI components
-│   ├── AddNewBook/
-│   │   └── AddNewBook.jsx  # Add book modal form
 │   ├── AverageBookRating/
 │   │   └── AverageBookRating.jsx
 │   ├── BookCard/
@@ -189,23 +236,33 @@ bookie/
 │   ├── BookReview/
 │   │   ├── BookReview.jsx  # Review submission & display
 │   │   └── utils/
-│   │       ├── addReviewToList.js
-│   │       ├── deleteReview.js
-│   │       └── validateForm.js
+│   │       └── validateForm.js # Form validation
 │   ├── BookTag/
 │   │   └── BookTag.jsx     # Genre and info tags
 │   ├── FavoriteButton/
 │   │   └── FavoriteButton.jsx
 │   ├── FallbackImage/
 │   │   └── FallbackImage.jsx
+│   ├── FileUpload/
+│   │   └── FileUpload.jsx  # File upload component
+│   ├── FloatingButton/
+│   │   └── FloatingButton.jsx
+│   ├── FormField/
+│   │   └── FormField.jsx   # Reusable form input
+│   ├── IsbnField/
+│   │   └── IsbnField.jsx   # ISBN input field
 │   ├── Logo/
 │   │   └── Logo.jsx
 │   ├── Navigation/
 │   │   └── Navigation.jsx  # Responsive navigation
 │   ├── ReturnButton/
 │   │   └── ReturnButton.jsx
-│   └── StarRating/
-│       └── StarRating.jsx
+│   ├── SelectGenre/
+│   │   └── SelectGenre.jsx # Genre dropdown
+│   ├── StarRating/
+│   │   └── StarRating.jsx
+│   └── SubmitButton/
+│       └── SubmitButton.jsx
 ├── .env.local              # Environment variables (not in repo)
 ├── .gitignore
 ├── package.json
@@ -231,16 +288,19 @@ The app uses Tailwind CSS for styling with a custom light color scheme:
 
 ## Recently Implemented
 
+- [x] 🔒 **REST API Architecture**: Complete migration to secure API endpoints
+- [x] 🛡️ **Security Improvements**: Server-side data operations with no client-side Supabase exposure
+- [x] 📡 **API Routes**: Custom REST endpoints for books, comments, and genres
 - [x] ⭐ **Book Reviews & Ratings**: Complete star rating system with user comments
 - [x] ➕ **Add New Books**: Full-featured form with validation and database integration  
 - [x] 📊 **Average Rating Calculations**: Real-time rating averages with live updates
 - [x] ❤️ **Favorites System**: LocalStorage-based favorites with persistence
-- [x] 🎯 **Dynamic Genre Selection**: Database-driven genre filtering
+- [x] 🎯 **Dynamic Genre Selection**: API-driven genre filtering
 - [x] 🔄 **Real-time Data Updates**: Automatic refresh when content is added
 - [x] 📱 **Mobile-First Design**: Responsive interface with touch-friendly controls
-- [x] ✅ **Form Validation**: Comprehensive client-side validation for all inputs
-- [x] 🎨 **Custom UI Components**: Reusable components with consistent design
-- [x] 💾 **Database Integration**: Full CRUD operations with Supabase
+- [x] ✅ **Form Validation**: Comprehensive client-side and server-side validation
+- [x] 🎨 **Custom UI Components**: Reusable form and display components
+- [x] 💾 **Database Integration**: Full CRUD operations via secure API layer
 
 ## Future Features
 
