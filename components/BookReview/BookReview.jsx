@@ -4,6 +4,7 @@ import { useParams, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { validateForm } from "./utils/validateForm";
 import StarRating from "../StarRating/StarRating";
+import { addReview, deleteReview, editReview } from "./utils/reviewApi";
 
 function BookReview({ reviewData }) {
   const params = useParams();
@@ -46,12 +47,7 @@ function BookReview({ reviewData }) {
       rating: rating,
     };
 
-    const response = await fetch("/api/comments", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(reviewData),
-    });
-    const result = await response.json();
+    const result = await addReview(reviewData);
     if (result.error) {
       setSubmitMessage("Something went wrong. Please try again.");
       setIssubmitting(false);
@@ -71,10 +67,7 @@ function BookReview({ reviewData }) {
   }
 
   async function handleDeleteReview(reviewId) {
-    const response = await fetch(`/api/comments/${reviewId}`, {
-      method: "DELETE",
-    });
-    const result = await response.json();
+    const result = await deleteReview(reviewId);
     if (result.error) {
       setDeleteMessage("Something went wrong. Please try again.");
       return;
@@ -104,12 +97,7 @@ function BookReview({ reviewData }) {
 
   async function saveEdit(reviewId) {
     try {
-      const response = await fetch(`/api/comments/${reviewId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(editValues),
-      });
-      const result = await response.json();
+      const result = await editReview(reviewId, editValues);
       console.log("✅ Save edit result:", { result });
       if (result.error) {
         console.error("❌ Save edit Supabase error:", result.error);
