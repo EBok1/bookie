@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { validateForm } from "./utils/validateForm";
 import StarRating from "../StarRating/StarRating";
 import { addReview, deleteReview, editReview } from "./utils/reviewApi";
+import { ReviewForm } from "../ReviewForm/ReviewForm";
 
 function BookReview({ reviewData }) {
   const params = useParams();
@@ -123,248 +124,198 @@ function BookReview({ reviewData }) {
 
   return (
     <>
-      <div className="bg-white p-4 my-8 rounded-lg">
-        <h3 className="font-bold text-2xl text-gray-800 font-playfair">
-          Leave a review
+      <ReviewForm
+        rating={rating}
+        onRatingChange={setRating}
+        errorMessage={errorMessage}
+        submitMessage={submitMessage}
+        reviewerName={reviewerName}
+        onReviewerNameChange={setReviewerName}
+        reviewerComment={reviewerComment}
+        onReviewerCommentChange={setReviewerComment}
+        onSubmit={handleReviewSubmit}
+        isSubmitting={isSubmitting}
+      />
+
+      <div className="md:flex md:justify-between items-center mt-8">
+        <h3 className="text-lg font-semibold text-gray-800 font-playfair mb-2">
+          Recent reviews
         </h3>
-
-        <StarRating rating={rating} onRatingChange={setRating} />
-
-        {errorMessage.rating && (
-          <p className="text-red-500 text-sm mt-2">{errorMessage.rating}</p>
-        )}
-
-        {submitMessage && (
-          <p className="text-green-500 text-sm mt-2">{submitMessage}</p>
-        )}
-
-        <form className="mt-4" onSubmit={handleReviewSubmit} noValidate>
-          <input
-            type="text"
-            placeholder="Name*"
-            className={`w-full mb-2 p-1 border-2 rounded-md ${
-              errorMessage.reviewerName ? "border-pink-500" : "border-[#bccdbc]"
-            } focus:border-blue-500`}
-            value={reviewerName}
-            onChange={(e) => setReviewerName(e.target.value)}
-            required
-          />
-
-          {errorMessage.reviewerName && (
-            <p className="text-red-500 text-sm mb-2">
-              {errorMessage.reviewerName}
-            </p>
-          )}
-
-          <input
-            type="text"
-            placeholder="Leave a review*"
-            className={`w-full mb-2 p-1 border-2 rounded-md ${
-              errorMessage.reviewerComment
-                ? "border-pink-500"
-                : "border-[#bccdbc]"
-            } focus:border-blue-500`}
-            value={reviewerComment}
-            onChange={(e) => setReviewerComment(e.target.value)}
-            required
-            maxLength="50"
-          />
-
-          {errorMessage.reviewerComment && (
-            <p className="text-red-500 text-sm mb-2">
-              {errorMessage.reviewerComment}
-            </p>
-          )}
-
-          <button
-            className="bg-[#bccdbc] text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1"
-            type="submit"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Submitting..." : "Submit"}
-          </button>
-        </form>
-
-        <div className="md:flex md:justify-between items-center mt-8">
-          <h3 className="text-lg font-semibold text-gray-800 font-playfair mb-2">
-            Recent reviews
-          </h3>
-          <p>Filter star rating:</p>
-        </div>
-        <div className="md:flex justify-between">
-          <div
-            className={`fixed top-0 left-0 right-0 bg-green-500 text-white p-3 text-center z-50 transition-transform duration-300 md:hidden ${
-              deleteMessage ? "translate-y-0" : "-translate-y-full"
-            }`}
-          >
-            {" "}
-            {deleteMessage && (
-              <p className="text-white text-sm">{deleteMessage}</p>
-            )}
-          </div>
-          <div
-            className={`fixed top-0 left-0 right-0 bg-green-500 text-white p-3 text-center z-50 transition-transform duration-300 md:hidden ${
-              editMessage ? "translate-y-0" : "-translate-y-full"
-            }`}
-          >
-            {" "}
-            {editMessage && <p className="text-white text-sm">{editMessage}</p>}
-          </div>
-          <div>
-            {[0, 1, 2, 3, 4, 5].map((filterOption) => (
-              <button
-                key={filterOption}
-                className={
-                  filterReview === filterOption
-                    ? "rounded-md p-2 border-[#bccdbc] border-2"
-                    : "p-2 py-1 border-transparent border-2"
-                }
-                onClick={() => {
-                  setFilterReview(filterOption);
-                  if (setSearchParams) {
-                    setSearchParams({ rating: filterOption });
-                  }
-                }}
-              >
-                {filterOption === 0 ? "All" : `${filterOption}★`}
-              </button>
-            ))}
-          </div>
+        <p>Filter star rating:</p>
+      </div>
+      <div className="md:flex justify-between">
+        <div
+          className={`fixed top-0 left-0 right-0 bg-green-500 text-white p-3 text-center z-50 transition-transform duration-300 md:hidden ${
+            deleteMessage ? "translate-y-0" : "-translate-y-full"
+          }`}
+        >
+          {" "}
           {deleteMessage && (
-            <div className="hidden md:block bg-green-100 text-green-800 px-3 py-2 rounded-md text-sm">
-              {deleteMessage}
-            </div>
-          )}
-          {editMessage && (
-            <p className="hidden md:block bg-green-100 text-green-800 px-3 py-2 rounded-md text-sm">
-              {editMessage}
-            </p>
+            <p className="text-white text-sm">{deleteMessage}</p>
           )}
         </div>
-
+        <div
+          className={`fixed top-0 left-0 right-0 bg-green-500 text-white p-3 text-center z-50 transition-transform duration-300 md:hidden ${
+            editMessage ? "translate-y-0" : "-translate-y-full"
+          }`}
+        >
+          {" "}
+          {editMessage && <p className="text-white text-sm">{editMessage}</p>}
+        </div>
         <div>
-          {bookCommentsById
-            .filter((review) => {
-              if (filterReview === 0) {
-                return true;
+          {[0, 1, 2, 3, 4, 5].map((filterOption) => (
+            <button
+              key={filterOption}
+              className={
+                filterReview === filterOption
+                  ? "rounded-md p-2 border-[#bccdbc] border-2"
+                  : "p-2 py-1 border-transparent border-2"
               }
-              return review.rating === filterReview;
-            })
-            .map((review) => (
-              <div
-                key={review.id}
-                className="rounded-md mt-4 px-3 py-1 border-[#bccdbc] border-2"
-              >
-                {editingReviewId === review.id ? (
-                  <>
-                    <input
-                      type="text"
-                      value={editValues.reviewer}
-                      onChange={(e) =>
-                        setEditValues({
-                          ...editValues,
-                          reviewer: e.target.value,
-                        })
-                      }
-                      className="w-full rounded-md my-2 p-1 border-[#bccdbc] border-2"
-                    />
-                    <input
-                      type="text"
-                      value={editValues.comment}
-                      onChange={(e) =>
-                        setEditValues({
-                          ...editValues,
-                          comment: e.target.value,
-                        })
-                      }
-                      className="w-full rounded-md mb-2 p-1 border-[#bccdbc] border-2"
-                    />
-                    <input
-                      type="number"
-                      min="1"
-                      max="5"
-                      value={editValues.rating}
-                      onChange={(e) =>
-                        setEditValues({
-                          ...editValues,
-                          rating: parseInt(e.target.value),
-                        })
-                      }
-                      className="mb-2 rounded-md p-1 border-[#bccdbc] border-2"
-                    />
-                  </>
-                ) : (
-                  <>
-                    <h2 className="text-lg font-medium text-gray-800">
-                      {review.reviewer}
-                    </h2>
-                    <p>{review.comment}</p>
-                    <p>{review.rating} ★ </p>
-                  </>
-                )}
+              onClick={() => {
+                setFilterReview(filterOption);
+                if (setSearchParams) {
+                  setSearchParams({ rating: filterOption });
+                }
+              }}
+            >
+              {filterOption === 0 ? "All" : `${filterOption}★`}
+            </button>
+          ))}
+        </div>
+        {deleteMessage && (
+          <div className="hidden md:block bg-green-100 text-green-800 px-3 py-2 rounded-md text-sm">
+            {deleteMessage}
+          </div>
+        )}
+        {editMessage && (
+          <p className="hidden md:block bg-green-100 text-green-800 px-3 py-2 rounded-md text-sm">
+            {editMessage}
+          </p>
+        )}
+      </div>
 
-                {editingReviewId === review.id ? (
-                  <>
-                    <div className="mb-1">
+      <div>
+        {bookCommentsById
+          .filter((review) => {
+            if (filterReview === 0) {
+              return true;
+            }
+            return review.rating === filterReview;
+          })
+          .map((review) => (
+            <div
+              key={review.id}
+              className="rounded-md mt-4 px-3 py-1 border-[#bccdbc] border-2"
+            >
+              {editingReviewId === review.id ? (
+                <>
+                  <input
+                    type="text"
+                    value={editValues.reviewer}
+                    onChange={(e) =>
+                      setEditValues({
+                        ...editValues,
+                        reviewer: e.target.value,
+                      })
+                    }
+                    className="w-full rounded-md my-2 p-1 border-[#bccdbc] border-2"
+                  />
+                  <input
+                    type="text"
+                    value={editValues.comment}
+                    onChange={(e) =>
+                      setEditValues({
+                        ...editValues,
+                        comment: e.target.value,
+                      })
+                    }
+                    className="w-full rounded-md mb-2 p-1 border-[#bccdbc] border-2"
+                  />
+                  <input
+                    type="number"
+                    min="1"
+                    max="5"
+                    value={editValues.rating}
+                    onChange={(e) =>
+                      setEditValues({
+                        ...editValues,
+                        rating: parseInt(e.target.value),
+                      })
+                    }
+                    className="mb-2 rounded-md p-1 border-[#bccdbc] border-2"
+                  />
+                </>
+              ) : (
+                <>
+                  <h2 className="text-lg font-medium text-gray-800">
+                    {review.reviewer}
+                  </h2>
+                  <p>{review.comment}</p>
+                  <p>{review.rating} ★ </p>
+                </>
+              )}
+
+              {editingReviewId === review.id ? (
+                <>
+                  <div className="mb-1">
+                    <button
+                      onClick={() => saveEdit(review.id)}
+                      className="bg-[#bccdbc] text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1 m-1"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => cancelEditing()}
+                      className="bg-[#f1a9ae] text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1 m-1"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => startEditing(review)}
+                    className="bg-[#bccdbc] text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1 mt-3 mb-2 mr-2"
+                  >
+                    Edit
+                  </button>
+
+                  <button
+                    popoverTarget={`delete-popover-${review.id}`}
+                    className="bg-[#f1a9ae] text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1"
+                  >
+                    Delete
+                  </button>
+                  <div
+                    popover="auto"
+                    id={`delete-popover-${review.id}`}
+                    className="border border-gray-300 bg-gray-100 rounded-md p-4 w-auto h-80 mx-9 shadow-md bg-opacity-90"
+                  >
+                    <p className="flex justify-center">
+                      Are you sure you want to delete this review?
+                    </p>
+                    <div className="flex justify-center mt-4">
                       <button
-                        onClick={() => saveEdit(review.id)}
-                        className="bg-[#bccdbc] text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1 m-1"
+                        onClick={() => handleDeleteReview(review.id)}
+                        className="bg-[#f1a9ae] text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1"
                       >
-                        Save
+                        Delete
                       </button>
                       <button
+                        popoverTarget={`delete-popover-${review.id}`}
+                        popoverTargetAction="hide"
                         onClick={() => cancelEditing()}
-                        className="bg-[#f1a9ae] text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1 m-1"
+                        className="bg-white text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1 ml-5"
                       >
                         Cancel
                       </button>
                     </div>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      onClick={() => startEditing(review)}
-                      className="bg-[#bccdbc] text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1 mt-3 mb-2 mr-2"
-                    >
-                      Edit
-                    </button>
-
-                    <button
-                      popoverTarget={`delete-popover-${review.id}`}
-                      className="bg-[#f1a9ae] text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1"
-                    >
-                      Delete
-                    </button>
-                    <div
-                      popover="auto"
-                      id={`delete-popover-${review.id}`}
-                      className="border border-gray-300 bg-gray-100 rounded-md p-4 w-auto h-80 mx-9 shadow-md bg-opacity-90"
-                    >
-                      <p className="flex justify-center">
-                        Are you sure you want to delete this review?
-                      </p>
-                      <div className="flex justify-center mt-4">
-                        <button
-                          onClick={() => handleDeleteReview(review.id)}
-                          className="bg-[#f1a9ae] text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1"
-                        >
-                          Delete
-                        </button>
-                        <button
-                          popoverTarget={`delete-popover-${review.id}`}
-                          popoverTargetAction="hide"
-                          onClick={() => cancelEditing()}
-                          className="bg-white text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1 ml-5"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-            ))}
-        </div>
+                  </div>
+                </>
+              )}
+            </div>
+          ))}
       </div>
     </>
   );
