@@ -7,6 +7,7 @@ import { addReview, deleteReview, editReview } from "./utils/reviewApi";
 import { ReviewForm } from "../ReviewForm/ReviewForm";
 import { ReviewCard } from "../ReviewCard/ReviewCard";
 import { ReviewFilters } from "../ReviewFilters/ReviewFilters";
+import { ReviewList } from "../ReviewList/ReviewList";
 
 function BookReview({ reviewData }) {
   const params = useParams();
@@ -146,28 +147,17 @@ function BookReview({ reviewData }) {
         setSearchParams={setSearchParams}
       />
 
-      <div>
-        {bookCommentsById
-          .filter((review) => {
-            if (filterReview === 0) {
-              return true;
-            }
-            return review.rating === filterReview;
-          })
-          .map((review) => (
-            <ReviewCard
-              key={review.id}
-              review={review}
-              isEditing={editingReviewId}
-              editValues={editValues}
-              onEditValuesChange={setEditValues}
-              onStartEdit={startEditing}
-              onSaveEdit={saveEdit}
-              onCancelEdit={cancelEditing}
-              onDelete={handleDeleteReview}
-            />
-          ))}
-      </div>
+     <ReviewList 
+      reviews={bookCommentsById}
+      filterReview={filterReview}
+      editingReviewId={editingReviewId}
+      editValues={editValues}
+      onEditValuesChange={setEditValues}
+      onStartEdit={startEditing}
+      onSaveEdit={saveEdit}
+      onCancelEdit={cancelEditing}
+      onDelete={handleDeleteReview}
+     />
     </>
   );
 }
