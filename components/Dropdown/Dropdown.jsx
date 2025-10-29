@@ -1,36 +1,10 @@
 "use client";
-import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useDropdown } from "./hooks/useDropdown";
 
 function Dropdown({ onToggle, menuItems }) {
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleDropdown = () => {
-      setIsOpen(!isOpen);
-      onToggle(!isOpen);
-    };
-  
-    const closeDropdown = () => {
-      setIsOpen(false);
-      onToggle(false);
-    };
-  
-    useEffect(() => {
-      const handleScroll = () => {
-        if (isOpen) {
-          setIsOpen(false);
-          onToggle(false);
-        }
-      };
-      if (isOpen) {
-        window.addEventListener("scroll", handleScroll);
-      }
-  
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }, [isOpen, onToggle]);
-  
+    const {isOpen, toggleDropdown, closeDropdown} = useDropdown(onToggle);
+   
     return (
       <div className="relative flex justify-between mr-6 ml-3">
         <link
