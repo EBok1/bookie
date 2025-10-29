@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Logo from "../Logo/Logo";
 import Link from "next/link";
 
-function Dropdown({ onToggle }) {
+function Dropdown({ onToggle, menuItems }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -42,32 +42,17 @@ function Dropdown({ onToggle }) {
         Menu <i className="fa fa-bars pl-1"></i>
       </button>
       {isOpen && (
-        <ul className="fixed top-[6.25rem] left-5 right-5 bg-[#fffdf6] shadow-md flex flex-col items-center py-4 gap-4 rounded-b border border-[#A55A16]">
-          <li className="w-full justify-center items-center flex border-b border-[#A55A16] pb-4">
-            <Link href="/" onClick={closeDropdown}>
-              Home
-            </Link>
-          </li>
-          <li className="w-full justify-center items-center flex border-b border-[#A55A16] pb-4">
-            <Link href="/about" onClick={closeDropdown}>
-              About
-            </Link>
-          </li>
-          <li className="w-full justify-center items-center flex border-b border-[#A55A16] pb-4">
-            <Link href="/contact" onClick={closeDropdown}>
-              Contact
-            </Link>
-          </li>
-          <li className="w-full justify-center items-center flex border-b border-[#A55A16] pb-4">
-            <Link href="/login" onClick={closeDropdown}>
-              Login
-            </Link>
-          </li>
-          <li>
-            <Link href="/favorites" onClick={closeDropdown}>
-              Favorites
-            </Link>
-          </li>
+        <ul className="fixed top-[6.25rem] left-5 right-5 bg-[#fffdf6] shadow-md flex flex-col items-center pt-4 gap-4 rounded-b border border-[#A55A16]">
+          {menuItems.map((item) => (
+            <li
+              key={item.href}
+              className="w-full justify-center items-center flex border-b border-[#A55A16] pb-4"
+            >
+              <Link href={item.href} onClick={closeDropdown}>
+                {item.label}
+              </Link>
+            </li>
+          ))}
         </ul>
       )}
     </div>
@@ -76,6 +61,13 @@ function Dropdown({ onToggle }) {
 
 function Navigation() {
   const [showBorder, setShowBorder] = useState(false);
+  const menuItems = [
+    { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
+    { label: "Login", href: "/login" },
+    { label: "Favorites", href: "/favorites" },
+  ];
 
   return (
     <>
@@ -87,7 +79,7 @@ function Navigation() {
         }`}
       >
         <Logo />
-        <Dropdown onToggle={setShowBorder} />
+        <Dropdown onToggle={setShowBorder} menuItems={menuItems} />
       </div>
 
       <nav className="hidden sm:flex justify-between items-center bg-[#fffdf6] rounded-md shadow-md mx-5 mt-5 pl-3 pr-5">
@@ -96,24 +88,27 @@ function Navigation() {
         </div>
 
         <div className="flex gap-20">
-          <Link className="hover:text-blue-500" href="/">
-            Home
-          </Link>
-          <Link className="hover:text-blue-500" href="/about">
-            About
-          </Link>
-          <Link className="hover:text-blue-500" href="/contact">
-            Contact
-          </Link>
+          {menuItems.slice(0, 3).map((item) => (
+            <Link
+              key={item.href}
+              className="hover:text-blue-500"
+              href={item.href}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
 
         <div className="flex gap-5">
-          <Link className="hover:text-blue-500" href="/login">
-            Login
-          </Link>
-          <Link className="hover:text-blue-500" href="/favorites">
-            Favorites
-          </Link>
+          {menuItems.slice(3).map((item) => (
+            <Link
+              key={item.href}
+              className="hover:text-blue-500"
+              href={item.href}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
       </nav>
     </>
