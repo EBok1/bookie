@@ -1,13 +1,13 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { useParams, useSearchParams } from "next/navigation";
+import React, { useState } from "react";
+import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { validateForm } from "./utils/validateForm";
 import { addReview, deleteReview, editReview } from "./utils/reviewApi";
 import { ReviewForm } from "../ReviewForm/ReviewForm";
-import { ReviewCard } from "../ReviewCard/ReviewCard";
 import { ReviewFilters } from "../ReviewFilters/ReviewFilters";
 import { ReviewList } from "../ReviewList/ReviewList";
+import { useReviewFilter } from "./hooks/useReviewFilter";
 
 function BookReview({ reviewData }) {
   const params = useParams();
@@ -23,13 +23,7 @@ function BookReview({ reviewData }) {
   const [editMessage, setEditMessage] = useState("");
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [editValues, setEditValues] = useState({});
-  const [filterReview, setFilterReview] = useState(0);
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  useEffect(() => {
-    const filterFromUrl = searchParams?.get("rating");
-    setFilterReview(parseInt(filterFromUrl) || 0);
-  }, [searchParams]);
+  const {filterReview, setFilterReview, setSearchParams } = useReviewFilter();
 
   async function handleReviewSubmit(e) {
     e.preventDefault();
