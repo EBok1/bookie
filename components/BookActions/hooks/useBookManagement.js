@@ -5,8 +5,10 @@ import { updateBook, deleteBook } from "../utils/bookApi";
 export function useBookManagement(bookData, router) {
   const [editBook, setEditBook] = useState(null);
   const [editValues, setEditValues] = useState({});
-  const [editMessage, setEditMessage] = useState("");
-  const [deleteMessage, setDeleteMessage] = useState("");
+  const [messages, setMessages] = useState({
+    edit: "",
+    delete: "",
+  });
 
   function startEditing(book) {
     setEditBook(book.id);
@@ -32,43 +34,52 @@ export function useBookManagement(bookData, router) {
       console.log("✅ Save edit result:", { result });
       if (result.error) {
         console.error("❌ Save edit Supabase error:", result.error);
-        setEditMessage("Something went wrong. Please try again.");
+        setMessages({
+          ...messages,
+          edit: "Something went wrong. Please try again.",
+        });
         return;
       }
 
-      setEditMessage("Book updated successfully!");
+      setMessages({ ...messages, edit: "Book updated successfully!" });
       setEditBook(null);
       setEditValues({});
 
       router.refresh();
-      setTimeout(() => setEditMessage(""), 5000);
+      setTimeout(() => setMessages({ ...messages, edit: "" }), 5000);
     } catch (err) {
       console.error("❌ Save edit catch error:", err);
-      setEditMessage("Something went wrong. Please try again.");
+      setMessages({
+        ...messages,
+        edit: "Something went wrong. Please try again.",
+      });
     }
   }
 
   async function handleDeleteBook(bookId) {
     const result = await deleteBook(bookId);
     if (result.error) {
-      setDeleteMessage("Something went wrong. Please try again.");
+      setMessages({
+        ...messages,
+        delete: "Something went wrong. Please try again.",
+      });
       return;
     }
 
-    setDeleteMessage("Book is deleted succesfully.");
-    router.push("/"); 
-    setTimeout(() => setDeleteMessage(""), 5000);
+    setMessages({ ...messages, delete: "Book is deleted succesfully." });
+    router.push("/");
+    setTimeout(() => setMessages({ ...messages, delete: "" }), 5000);
   }
 
   return {
-    editBook, 
+    editBook,
     editValues,
     setEditValues,
-    editMessage, 
-    deleteMessage,
-    startEditing, 
-    cancelEditing, 
-    saveEdit, 
+    editMessage: messages.edit,
+    deleteMessage: messages.delete,
+    startEditing,
+    cancelEditing,
+    saveEdit,
     handleDeleteBook,
   };
 }
