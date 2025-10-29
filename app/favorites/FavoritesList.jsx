@@ -2,14 +2,14 @@
 import { useState, useEffect } from "react";
 import BookCard from "../../components/BookCard/BookCard";
 import BookCardGrid from "../../components/BookCardGrid/BookCardGrid";
+import { useFavorites } from "../../components/FavoriteButton/hooks/useFavorites";
 
 function FavoritesList() {
   const [favoriteBooks, setFavoriteBooks] = useState([]);
+  const { getAllFavorites } = useFavorites();
 
   useEffect(() => {
-    const storedFavorites = localStorage.getItem("favorites");
-    const favoritesArray = storedFavorites ? JSON.parse(storedFavorites) : [];
-    setFavoriteBooks(favoritesArray);
+    setFavoriteBooks(getAllFavorites());
   }, []);
 
   return (
