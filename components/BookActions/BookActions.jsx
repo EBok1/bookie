@@ -1,73 +1,20 @@
 "use client";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useBookManagement } from "./hooks/useBookManagement";
 
 export const BookActions = ({ bookData }) => {
-  const [editBook, setEditBook] = useState(null);
-  const [editValues, setEditValues] = useState({});
-  const [editMessage, setEditMessage] = useState("");
   const router = useRouter();
-  const [deleteMessage, setDeleteMessage] = useState("");
-
-  function startEditing(book) {
-    setEditBook(book.id);
-    setEditValues({
-      title: book.title,
-      author: book.author,
-      isbn: book.isbn,
-      genre: book.genre,
-      description: book.description,
-      publishedYear: book.publishedYear,
-      language: book.language,
-    });
-  }
-
-  function cancelEditing() {
-    setEditBook(null);
-    setEditValues({});
-  }
-
-  async function saveEdit(bookId) {
-    try {
-      const response = await fetch(`/api/books/${bookId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(editValues),
-      });
-      const result = await response.json();
-      console.log("✅ Save edit result:", { result });
-      if (result.error) {
-        console.error("❌ Save edit Supabase error:", result.error);
-        setEditMessage("Something went wrong. Please try again.");
-        return;
-      }
-
-      setEditMessage("Book updated successfully!");
-      setEditBook(null);
-      setEditValues({});
-
-      router.refresh();
-      setTimeout(() => setEditMessage(""), 5000);
-    } catch (err) {
-      console.error("❌ Save edit catch error:", err);
-      setEditMessage("Something went wrong. Please try again.");
-    }
-  }
-
-  async function handleDeleteBook(bookId) {
-    const response = await fetch(`/api/books/${bookId}`, {
-      method: "DELETE",
-    });
-    const result = await response.json();
-    if (result.error) {
-      setDeleteMessage("Something went wrong. Please try again.");
-      return;
-    }
-
-    setDeleteMessage("Book is deleted succesfully.");
-    router.push("/"); // Refresh to update average rating
-    setTimeout(() => setDeleteMessage(""), 5000);
-  }
+  const {
+    editBook,
+    editValues,
+    setEditValues,
+    editMessage,
+    deleteMessage,
+    startEditing,
+    cancelEditing,
+    saveEdit,
+    handleDeleteBook,
+  } = useBookManagement(bookData, router);
 
   return (
     <>
@@ -157,7 +104,7 @@ export const BookActions = ({ bookData }) => {
             className="w-full rounded-md mb-2 p-1 border-[#bccdbc] border-2"
           />
         </>
-      ) : null }
+      ) : null}
 
       {editBook !== null ? (
         <>
