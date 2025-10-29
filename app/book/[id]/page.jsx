@@ -7,6 +7,9 @@ import Image from "next/image";
 import { BookActions } from "../../../components/BookActions/BookActions";
 import { supabase } from "../../supabaseClient";
 
+// Force dynamic rendering - fetch fresh data on every request
+export const dynamic = 'force-dynamic';
+
 export default async function BookDetailPage(props) {
   const { id } = await props.params;
 
