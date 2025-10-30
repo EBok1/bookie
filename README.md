@@ -218,8 +218,6 @@ bookie/
 │   ├── favorites/
 │   │   ├── FavoritesList.jsx # Favorites list component
 │   │   └── page.jsx        # User favorites page
-│   ├── mocks/
-│   │   └── books.json      # Sample data (now uses API)
 │   ├── globals.css         # Global styles
 │   ├── layout.jsx          # Root layout component
 │   ├── page.jsx            # Homepage with book grid
