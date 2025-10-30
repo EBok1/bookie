@@ -2,6 +2,7 @@ import BookCard from "../components/BookCard/BookCard";
 import BookCardGrid from "../components/BookCardGrid/BookCardGrid";
 import { FloatingButton } from "../components/FloatingButton/FloatingButton";
 import { supabase } from "./supabaseClient";
+import Image from "next/image";
 
 // Force dynamic rendering - fetch fresh data on every request
 export const dynamic = "force-dynamic";
@@ -65,10 +66,13 @@ export default async function HomePage() {
             </p>
           </div>
         </div>
-        <img
+        <Image
           src="/front-page.png"
           alt="Image of drawn books"
+          width={800}
+          height={600}
           className="h-auto w-screen md:w-[60%] hidden md:block xl:w-[58%] 2xl:w-[40%]"
+          priority
         />
       </div>
       <h2 className="text-2xl font-bold mt-6 mb-2 mx-4 flex justify-center font-playfair">
