@@ -11,10 +11,7 @@ export function ReviewCard({
   onDelete,
 }) {
   return (
-    <div
-      key={review.id}
-      className="rounded-md mt-4 px-3 py-1 border-[#bccdbc] border-2"
-    >
+    <article className="rounded-md mt-4 px-3 py-1 border-[#bccdbc] border-2">
       {isEditing === review.id ? (
         <>
           <input
@@ -122,6 +119,6 @@ export function ReviewCard({
           </div>
         </>
       )}
-    </div>
+    </article>
   );
 }
