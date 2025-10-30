@@ -14,41 +14,68 @@ export function ReviewCard({
     <article className="rounded-md mt-4 px-3 py-1 border-[#bccdbc] border-2">
       {isEditing === review.id ? (
         <>
-          <input
-            type="text"
-            value={editValues.reviewer}
-            onChange={(e) =>
-              onEditValuesChange({
-                ...editValues,
-                reviewer: e.target.value,
-              })
-            }
-            className="w-full rounded-md my-2 p-1 border-[#bccdbc] border-2"
-          />
-          <input
-            type="text"
-            value={editValues.comment}
-            onChange={(e) =>
-              onEditValuesChange({
-                ...editValues,
-                comment: e.target.value,
-              })
-            }
-            className="w-full rounded-md mb-2 p-1 border-[#bccdbc] border-2"
-          />
-          <input
-            type="number"
-            min="1"
-            max="5"
-            value={editValues.rating}
-            onChange={(e) =>
-              onEditValuesChange({
-                ...editValues,
-                rating: parseInt(e.target.value),
-              })
-            }
-            className="mb-2 rounded-md p-1 border-[#bccdbc] border-2"
-          />
+          <div className="my-2">
+            <label
+              htmlFor={`edit-reviewer-${review.id}`}
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Reviewer Name
+            </label>
+            <input
+              id={`edit-reviewer-${review.id}`}
+              type="text"
+              value={editValues.reviewer}
+              onChange={(e) =>
+                onEditValuesChange({
+                  ...editValues,
+                  reviewer: e.target.value,
+                })
+              }
+              className="w-full rounded-md p-1 border-[#bccdbc] border-2"
+            />
+          </div>
+          <div className="mb-2">
+            <label
+              htmlFor={`edit-comment-${review.id}`}
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Comment
+            </label>
+            <input
+              id={`edit-comment-${review.id}`}
+              type="text"
+              value={editValues.comment}
+              onChange={(e) =>
+                onEditValuesChange({
+                  ...editValues,
+                  comment: e.target.value,
+                })
+              }
+              className="w-full rounded-md p-1 border-[#bccdbc] border-2"
+            />
+          </div>
+          <div className="mb-2">
+            <label
+              htmlFor={`edit-rating-${review.id}`}
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Rating (1-5)
+            </label>
+            <input
+              id={`edit-rating-${review.id}`}
+              type="number"
+              min="1"
+              max="5"
+              value={editValues.rating}
+              onChange={(e) =>
+                onEditValuesChange({
+                  ...editValues,
+                  rating: parseInt(e.target.value),
+                })
+              }
+              className="rounded-md p-1 border-[#bccdbc] border-2"
+            />
+          </div>
         </>
       ) : (
         <>

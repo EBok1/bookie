@@ -30,42 +30,58 @@ export function ReviewForm({
       )}
 
       <form className="mt-4" onSubmit={onSubmit} noValidate>
-        <input
-          type="text"
-          placeholder="Name*"
-          className={`w-full mb-2 p-1 border-2 rounded-md ${
-            errorMessage.reviewerName ? "border-pink-500" : "border-[#bccdbc]"
-          } focus:border-blue-500`}
-          value={reviewerName}
-          onChange={(e) => onReviewerNameChange(e.target.value)}
-          required
-        />
+        <div className="mb-2">
+          <label
+            htmlFor="reviewer-name"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Name*
+          </label>
+          <input
+            id="reviewer-name"
+            type="text"
+            placeholder="Name*"
+            className={`w-full p-1 border-2 rounded-md ${
+              errorMessage.reviewerName ? "border-pink-500" : "border-[#bccdbc]"
+            } focus:border-blue-500`}
+            value={reviewerName}
+            onChange={(e) => onReviewerNameChange(e.target.value)}
+            required
+          />
+          {errorMessage.reviewerName && (
+            <p className="text-red-500 text-sm mt-1">
+              {errorMessage.reviewerName}
+            </p>
+          )}
+        </div>
 
-        {errorMessage.reviewerName && (
-          <p className="text-red-500 text-sm mb-2">
-            {errorMessage.reviewerName}
-          </p>
-        )}
-
-        <input
-          type="text"
-          placeholder="Leave a review*"
-          className={`w-full mb-2 p-1 border-2 rounded-md ${
-            errorMessage.reviewerComment
-              ? "border-pink-500"
-              : "border-[#bccdbc]"
-          } focus:border-blue-500`}
-          value={reviewerComment}
-          onChange={(e) => onReviewerCommentChange(e.target.value)}
-          required
-          maxLength="50"
-        />
-
-        {errorMessage.reviewerComment && (
-          <p className="text-red-500 text-sm mb-2">
-            {errorMessage.reviewerComment}
-          </p>
-        )}
+        <div className="mb-2">
+          <label
+            htmlFor="reviewer-comment"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Review*
+          </label>
+          <input
+            id="reviewer-comment"
+            type="text"
+            placeholder="Leave a review*"
+            className={`w-full p-1 border-2 rounded-md ${
+              errorMessage.reviewerComment
+                ? "border-pink-500"
+                : "border-[#bccdbc]"
+            } focus:border-blue-500`}
+            value={reviewerComment}
+            onChange={(e) => onReviewerCommentChange(e.target.value)}
+            required
+            maxLength="50"
+          />
+          {errorMessage.reviewerComment && (
+            <p className="text-red-500 text-sm mt-1">
+              {errorMessage.reviewerComment}
+            </p>
+          )}
+        </div>
 
         <button
           className="bg-[#bccdbc] text-black disabled:opacity-50 rounded-full text-sm font-medium px-3 py-1"

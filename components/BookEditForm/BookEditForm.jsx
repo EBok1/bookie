@@ -42,19 +42,27 @@ export function BookEditForm({ editValues, onEditValuesChange }) {
   return (
     <>
       {fields.map((field) => (
-        <input
-          key={field.name}
-          type="text"
-          value={editValues[field.name] || ""}
-          onChange={(e) =>
-            onEditValuesChange({
-              ...editValues,
-              [field.name]: e.target.value,
-            })
-          }
-          placeholder={field.label}
-          className={field.className}
-        />
+        <div key={field.name} className="mb-2">
+          <label
+            htmlFor={`book-${field.name}`}
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            {field.label}
+          </label>
+          <input
+            id={`book-${field.name}`}
+            type="text"
+            value={editValues[field.name] || ""}
+            onChange={(e) =>
+              onEditValuesChange({
+                ...editValues,
+                [field.name]: e.target.value,
+              })
+            }
+            placeholder={field.label}
+            className="w-full rounded-md p-1 border-[#bccdbc] border-2"
+          />
+        </div>
       ))}
     </>
   );
