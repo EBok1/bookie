@@ -40,7 +40,7 @@ export function BookEditForm({ editValues, onEditValuesChange }) {
   ];
 
   return (
-    <>
+    <div>
       {fields.map((field) => (
         <div key={field.name} className="mb-2">
           <label
@@ -64,6 +64,6 @@ export function BookEditForm({ editValues, onEditValuesChange }) {
           />
         </div>
       ))}
-    </>
+    </div>
   );
 }

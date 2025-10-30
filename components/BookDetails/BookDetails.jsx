@@ -1,6 +1,6 @@
 const BookDetails = ({ bookData }) => {
   return (
-    <>
+    <div>
       <h3 className="text-xl font-bold text-gray-800 mb-2 font-playfair">
         Book Details
       </h3>
@@ -26,7 +26,7 @@ const BookDetails = ({ bookData }) => {
           <dd className="text-gray-900">{bookData.format}</dd>
         </div>
       </dl>
-    </>
+    </div>
   );
 };
 

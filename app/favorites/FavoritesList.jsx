@@ -10,22 +10,20 @@ function FavoritesList() {
 
   useEffect(() => {
     setFavoriteBooks(getAllFavorites());
-  }, []);
+  }, [getAllFavorites]);
 
   return (
-    <>
-      <div className="mt-10">
-        <BookCardGrid>
-          {favoriteBooks.length > 0 ? (
-            favoriteBooks.map((book) => <BookCard key={book.id} book={book} />)
-          ) : (
-            <p>
-              No favorite books yet! Start liking some books to see them here.
-            </p>
-          )}
-        </BookCardGrid>
-      </div>
-    </>
+    <div className="mt-10">
+      <BookCardGrid>
+        {favoriteBooks.length > 0 ? (
+          favoriteBooks.map((book) => <BookCard key={book.id} book={book} />)
+        ) : (
+          <p>
+            No favorite books yet! Start liking some books to see them here.
+          </p>
+        )}
+      </BookCardGrid>
+    </div>
   );
 }
 
