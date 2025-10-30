@@ -1,15 +1,23 @@
 "use client";
+import { useReviewFilter } from "../BookReview/hooks/useReviewFilter";
+import { useReviewManagement } from "../BookReview/hooks/useReviewManagement";
+import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-export function ReviewFilters({
-  filterReview,
-  onFilterChange,
-  deleteMessage,
-  editMessage,
-  setSearchParams,
-}) {
+export function ReviewFilters({ reviewData }) {
+  const params = useParams();
+  const router = useRouter();
+  const { filterReview, setFilterReview, updateSearchParams } =
+    useReviewFilter();
+  const { deleteMessage, editMessage } = useReviewManagement(
+    reviewData,
+    params,
+    router
+  );
+
   return (
     <>
-     <div className="md:flex md:justify-between items-center mt-8">
+      <div className="md:flex md:justify-between items-center mt-8">
         <h3 className="text-lg font-semibold text-gray-800 font-playfair mb-2">
           Recent reviews
         </h3>
@@ -44,10 +52,8 @@ export function ReviewFilters({
                   : "p-2 py-1 border-transparent border-2"
               }
               onClick={() => {
-                onFilterChange(filterOption);
-                if (setSearchParams) {
-                  setSearchParams({ rating: filterOption });
-                }
+                setFilterReview(filterOption);
+                updateSearchParams(filterOption);
               }}
             >
               {filterOption === 0 ? "All" : `${filterOption}★`}
