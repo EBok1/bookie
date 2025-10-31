@@ -10,6 +10,7 @@ import { FileUpload } from "../../components/FileUpload/FileUpload";
 import { SelectGenre } from "../../components/SelectGenre/SelectGenre";
 import { SubmitButton } from "../../components/SubmitButton/SubmitButton";
 import { useBookForm } from "./hooks/useBookForm";
+import ReturnButton from "../../components/ReturnButton/ReturnButton";
 
 const AddBookPage = () => {
   const { bookFormData, setBookFormData } = useBookForm();
@@ -66,7 +67,8 @@ const AddBookPage = () => {
 
   return (
     <>
-      <div className="container mx-auto px-4 py-8 max-w-2xl">
+     <ReturnButton />
+      <div className="container mx-auto px-4 max-w-2xl">
         <div className="bg-gray-100 rounded-md p-6 shadow-md">
           <h1 className="text-2xl font-bold text-center mb-6">Add New Book</h1>
 
