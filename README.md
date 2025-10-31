@@ -16,12 +16,6 @@ A modern book management and discovery app featuring popular BookTok fantasy and
 - **📖 Detailed Book Pages**: Comprehensive information including descriptions, tags, and user reviews
 - **🔄 Real-time Updates**: Live data refresh when books or reviews are added
 
-## Book Genres
-
-- **Fantasy Romance**: Dragon riders, fae courts, and magical worlds
-- **Contemporary Romance**: College romance, sports romance, and modern love stories
-- **Popular Titles**: Including Fourth Wing, ACOTAR, The Cruel Prince, Icebreaker, and more!
-
 ## Tech Stack
 
 - **Next.js 15** - React framework with App Router and server components
@@ -174,10 +168,6 @@ Books and reviews are stored in **Supabase** with the following structure:
   "created_at": "2024-03-15T10:00:00Z"
 }
 ```
-
-## Screenshots & Demo
-
-> **Note**: Screenshots will be added once the app is deployed. For now, you can run the app locally to see all features in action!
 
 ### Key Features Preview:
 - **Homepage**: "Welcome to Bookie" landing with book grid, ratings, and floating "Add Book" button
@@ -394,17 +384,3 @@ This app uses **Supabase** as the backend. You'll need to create:
 - `rating` (bigint)
 - `comment` (text)
 - `created_at` (timestamp, default: now())
-
-## Acknowledgments
-
-- **BookTok Community** for inspiring the book collection and recommendations
-- **Supabase Team** for providing an excellent backend-as-a-service platform
-- **Next.js & React Teams** for the incredible development frameworks
-- **Tailwind CSS** for the utility-first CSS framework
-- **Font Awesome** for the beautiful icon library
-- **Open Library** for book cover image APIs
-- **All the Amazing Authors** whose books are featured in this collection
-
----
-
-Happy Reading! 📖✨
