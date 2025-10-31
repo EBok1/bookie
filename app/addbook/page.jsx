@@ -55,8 +55,7 @@ const AddBookPage = () => {
     setBookFormData(clearFormFields());
     setSubmitMessage("Book is added successfully!");
     setIsSubmitting(false);
-
-    setTimeout(() => router.push("/"), 2000);
+    router.push(`/book/${result.data[0].id}`);
   }
 
   const { availableGenres, loadingGenres, fetchGenres } = useGenres();
@@ -76,6 +75,7 @@ const AddBookPage = () => {
           )}
 
           <form className="mt-4" onSubmit={handleAddBookSubmit} noValidate>
+            <h2 className="mb-1">Title*</h2>
             <FormField
               placeholder="Title*"
               value={bookFormData.title}
@@ -87,8 +87,10 @@ const AddBookPage = () => {
               }
               error={errorMessage.title}
               required
+              minLength="2"
             />
 
+            <h2 className="mt-4 mb-1">Auteur(s)*</h2>
             <FormField
               placeholder="Auteur(s)*"
               value={bookFormData.author}
@@ -116,6 +118,7 @@ const AddBookPage = () => {
               onToggleInfo={() => setOpenInfoButton(!openInfoButton)}
             />
 
+            <h2 className="mt-4 mb-1">Image</h2>
             <FileUpload
               selectedFile={bookFormData.coverImage}
               onFileChange={(e) =>
@@ -124,6 +127,7 @@ const AddBookPage = () => {
               accept="image/*"
             />
 
+            <h2 className="mt-4 mb-1">Genre*</h2>
             <SelectGenre
               value={bookFormData.genre}
               onChange={(e) =>
@@ -137,6 +141,7 @@ const AddBookPage = () => {
               error={errorMessage.genre}
             />
 
+            <h2 className="mt-4 mb-1">Description</h2>
             <FormField
               placeholder="Description"
               value={bookFormData.description}
@@ -149,6 +154,7 @@ const AddBookPage = () => {
               maxLength="500"
             />
 
+            <h2 className="mt-4 mb-1">Published Year*</h2>
             <FormField
               type="number"
               placeholder="Published Year*"
@@ -163,6 +169,7 @@ const AddBookPage = () => {
               maxLength="4"
             />
 
+            <h2 className="mt-4 mb-1">Language*</h2>
             <FormField
               placeholder="Language*"
               value={bookFormData.language}
@@ -178,10 +185,8 @@ const AddBookPage = () => {
 
             <SubmitButton
               isLoading={isSubmitting}
-              onCancel={() => router.push("/")}
               onSubmit={handleAddBookSubmit}
               submitText="Add Book"
-              cancelText="Back to Home"
             />
           </form>
         </div>
