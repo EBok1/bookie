@@ -6,6 +6,7 @@ A modern book management and discovery app featuring popular BookTok fantasy and
 
 - **📚 Curated Book Collection**: Hand-picked fantasy and romance books popular on BookTok
 - **⭐ Book Reviews & Ratings**: Submit and view user reviews with star ratings
+- **🔍 Review Filtering**: Filter reviews by star rating with URL-based state persistence
 - **📊 Average Rating System**: Real-time calculated averages from all user reviews
 - **➕ Add New Books**: Contribute new books to the collection with full form validation
 - **❤️ Favorites System**: Save favorite books with localStorage persistence
@@ -13,7 +14,7 @@ A modern book management and discovery app featuring popular BookTok fantasy and
 - **📱 Responsive Design**: Mobile-first design with dropdown navigation
 - **🎨 Modern UI**: Clean interface built with Tailwind CSS and custom components
 - **📖 Detailed Book Pages**: Comprehensive information including descriptions, tags, and user reviews
-- **🔍 Real-time Updates**: Live data refresh when books or reviews are added
+- **🔄 Real-time Updates**: Live data refresh when books or reviews are added
 
 ## Book Genres
 
@@ -96,6 +97,8 @@ npm run dev
 ### Book Details
 - Click any book card to view detailed information
 - Read user reviews and see average ratings
+- Filter reviews by star rating (All, 1★, 2★, 3★, 4★, 5★)
+- Filter state persists in URL for shareable links
 - Submit your own reviews with star ratings
 - Add/remove books from your favorites list
 
@@ -225,22 +228,42 @@ bookie/
 ├── components/             # Reusable UI components
 │   ├── AverageBookRating/
 │   │   └── AverageBookRating.jsx
+│   ├── BookActionButtons/
+│   │   └── BookActionButtons.jsx
+│   ├── BookActions/
+│   │   ├── BookActions.jsx
+│   │   ├── hooks/
+│   │   │   └── useBookManagement.js
+│   │   └── utils/
+│   │       └── bookApi.js
 │   ├── BookCard/
 │   │   └── BookCard.jsx    # Individual book display
 │   ├── BookCardGrid/
 │   │   └── BookCardGrid.jsx
 │   ├── BookDetails/
 │   │   └── BookDetails.jsx
+│   ├── BookEditForm/
+│   │   └── BookEditForm.jsx
 │   ├── BookReview/
-│   │   ├── BookReview.jsx  # Review submission & display
+│   │   ├── BookReview.jsx  # Main review container
+│   │   ├── hooks/
+│   │   │   ├── useReviewFilter.js    # URL-based review filtering
+│   │   │   └── useReviewManagement.js # Review CRUD operations
 │   │   └── utils/
+│   │       ├── reviewApi.js    # Review API calls
 │   │       └── validateForm.js # Form validation
 │   ├── BookTag/
 │   │   └── BookTag.jsx     # Genre and info tags
-│   ├── FavoriteButton/
-│   │   └── FavoriteButton.jsx
+│   ├── Dropdown/
+│   │   ├── Dropdown.jsx
+│   │   └── hooks/
+│   │       └── useDropdown.js
 │   ├── FallbackImage/
 │   │   └── FallbackImage.jsx
+│   ├── FavoriteButton/
+│   │   ├── FavoriteButton.jsx
+│   │   └── hooks/
+│   │       └── useFavorites.js
 │   ├── FileUpload/
 │   │   └── FileUpload.jsx  # File upload component
 │   ├── FloatingButton/
@@ -248,17 +271,25 @@ bookie/
 │   ├── FormField/
 │   │   └── FormField.jsx   # Reusable form input
 │   ├── IsbnField/
-│   │   └── IsbnField.jsx   # ISBN input field
+│   │   └── IsbnField.jsx   # ISBN input with info tooltip
 │   ├── Logo/
 │   │   └── Logo.jsx
 │   ├── Navigation/
 │   │   └── Navigation.jsx  # Responsive navigation
 │   ├── ReturnButton/
 │   │   └── ReturnButton.jsx
+│   ├── ReviewCard/
+│   │   └── ReviewCard.jsx  # Individual review display
+│   ├── ReviewFilters/
+│   │   └── ReviewFilters.jsx # Star rating filter buttons
+│   ├── ReviewForm/
+│   │   └── ReviewForm.jsx  # Review submission form
+│   ├── ReviewList/
+│   │   └── ReviewList.jsx  # Filtered review display
 │   ├── SelectGenre/
 │   │   └── SelectGenre.jsx # Genre dropdown
 │   ├── StarRating/
-│   │   └── StarRating.jsx
+│   │   └── StarRating.jsx  # Interactive star rating
 │   └── SubmitButton/
 │       └── SubmitButton.jsx
 ├── .env.local              # Environment variables (not in repo)
@@ -290,6 +321,8 @@ The app uses Tailwind CSS for styling with a custom light color scheme:
 - [x] 🛡️ **Security Improvements**: Server-side data operations with no client-side Supabase exposure
 - [x] 📡 **API Routes**: Custom REST endpoints for books, comments, and genres
 - [x] ⭐ **Book Reviews & Ratings**: Complete star rating system with user comments
+- [x] 🔍 **Review Filtering**: URL-based review filtering by star rating with shareable links
+- [x] 🏗️ **Component Architecture Refactor**: Eliminated prop drilling with self-contained review components
 - [x] ➕ **Add New Books**: Full-featured form with validation and database integration  
 - [x] 📊 **Average Rating Calculations**: Real-time rating averages with live updates
 - [x] ❤️ **Favorites System**: LocalStorage-based favorites with persistence
@@ -297,8 +330,9 @@ The app uses Tailwind CSS for styling with a custom light color scheme:
 - [x] 🔄 **Real-time Data Updates**: Automatic refresh when content is added
 - [x] 📱 **Mobile-First Design**: Responsive interface with touch-friendly controls
 - [x] ✅ **Form Validation**: Comprehensive client-side and server-side validation
-- [x] 🎨 **Custom UI Components**: Reusable form and display components
+- [x] 🎨 **Custom UI Components**: Reusable form and display components with custom hooks
 - [x] 💾 **Database Integration**: Full CRUD operations via secure API layer
+- [x] 💡 **Improved UX**: ISBN info tooltip repositioned above icon for better visibility
 
 ## Future Features
 
