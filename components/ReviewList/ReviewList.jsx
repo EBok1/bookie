@@ -20,28 +20,52 @@ export function ReviewList({ reviewData }) {
     handleDeleteReview,
   } = useReviewManagement(reviewData, params, router);
 
+  const filteredReviews = reviews.filter((review) => {
+    if (filterReview === 0) {
+      return true;
+    }
+    return review.rating === filterReview;
+  });
+
+  if (filteredReviews.length === 0 && filterReview !== 0) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-600 text-lg">
+          No reviews with {filterReview}★ rating yet!
+        </p>
+        <p className="text-gray-500 text-sm mt-2">
+          Be the first to leave a {filterReview}-star review.
+        </p>
+      </div>
+    );
+  }
+
+  if (filteredReviews.length === 0 && filterReview === 0) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-600 text-lg">No reviews yet!</p>
+        <p className="text-gray-500 text-sm mt-2">
+          Be the first to leave a review.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div>
-      {reviews
-        .filter((review) => {
-          if (filterReview === 0) {
-            return true;
-          }
-          return review.rating === filterReview;
-        })
-        .map((review) => (
-          <ReviewCard
-            key={review.id}
-            review={review}
-            isEditing={editingReviewId}
-            editValues={editValues}
-            onEditValuesChange={setEditValues}
-            onStartEdit={startEditing}
-            onSaveEdit={saveEdit}
-            onCancelEdit={cancelEditing}
-            onDelete={handleDeleteReview}
-          />
-        ))}
+      {reviews.map((review) => (
+        <ReviewCard
+          key={review.id}
+          review={review}
+          isEditing={editingReviewId}
+          editValues={editValues}
+          onEditValuesChange={setEditValues}
+          onStartEdit={startEditing}
+          onSaveEdit={saveEdit}
+          onCancelEdit={cancelEditing}
+          onDelete={handleDeleteReview}
+        />
+      ))}
     </div>
   );
 }
