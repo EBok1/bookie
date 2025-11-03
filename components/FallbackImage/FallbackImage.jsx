@@ -17,7 +17,7 @@ const FallbackImage = ({ book }) => {
           alt={`Cover of ${book.title}`}
           width={384}
           height={384}
-          className="h-96"
+          className="h-96 w-auto"
           onError={handleImageError}
         />
       ) : (
