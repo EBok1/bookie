@@ -1,8 +1,14 @@
+interface SubmitButtonProps {
+  onSubmit: () => void; 
+  isLoading: boolean;
+  submitText?: string;
+}
+
 export const SubmitButton = ({
   onSubmit,
   isLoading,
   submitText = "Submit",
-}) => {
+}: SubmitButtonProps) => {
   return (
     <>
       <div className="gap-2 flex justify-center mt-4">
