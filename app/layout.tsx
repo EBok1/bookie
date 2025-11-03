@@ -18,7 +18,9 @@ export const metadata: Metadata = {
   description: "Your personal reading companion",
 };
 
-export default function RootLayout({ children }: {children: ReactNode}) {
+type RouteLayoutProps = {children: ReactNode}
+
+export default function RootLayout({ children }: RouteLayoutProps) {
   return (
     <html lang="en" className={playfair.variable}>
       <head>

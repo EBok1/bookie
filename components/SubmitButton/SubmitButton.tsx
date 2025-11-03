@@ -1,8 +1,8 @@
-interface SubmitButtonProps {
-  onSubmit: () => void; 
+type SubmitButtonProps = {
+  onSubmit: () => void;
   isLoading: boolean;
   submitText?: string;
-}
+};
 
 export const SubmitButton = ({
   onSubmit,

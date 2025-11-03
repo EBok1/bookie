@@ -1,9 +1,9 @@
 "use client";
 
-interface StarRatingProps {
+type StarRatingProps = {
   rating: number;
-  onRatingChange: (param:number) => void;
-}
+  onRatingChange: (param: number) => void;
+};
 
 export default function StarRating({ rating, onRatingChange }: StarRatingProps) {
   return (

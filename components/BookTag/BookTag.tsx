@@ -1,10 +1,10 @@
 import React from "react";
 
-interface BookTagProps extends React.HTMLAttributes<HTMLSpanElement> {
+type BookTagProps = React.HTMLAttributes<HTMLSpanElement> & {
   tag: string;
   variant: "orange" | "grey" | "green";
   hashtag?: boolean;
-}
+};
 
 const BookTag = ({ tag, variant, hashtag, ...props }: BookTagProps) => {
   const variants = {
