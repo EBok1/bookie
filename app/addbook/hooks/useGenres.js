@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 export const useGenres = () => {
   const [availableGenres, setAvailableGenres] = useState([]);
   const [loadingGenres, setLoadingGenres] = useState(false);
   const [genresCache, setGenresCache] = useState(null);
 
-  const fetchGenres = async () => {
+  const fetchGenres = useCallback(async () => {
     try {
       setLoadingGenres(true);
 
@@ -27,7 +27,7 @@ export const useGenres = () => {
     } finally {
       setLoadingGenres(false);
     }
-  };
+  }, [genresCache]);
 
   return {
     availableGenres,
