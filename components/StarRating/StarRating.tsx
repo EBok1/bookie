@@ -1,6 +1,11 @@
 "use client";
 
-export default function StarRating({ rating, onRatingChange }) {
+interface StarRatingProps {
+  rating: number;
+  onRatingChange: (param:number) => void;
+}
+
+export default function StarRating({ rating, onRatingChange }: StarRatingProps) {
   return (
     <>
       <div className="mt-2">
