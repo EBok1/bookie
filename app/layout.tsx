@@ -1,8 +1,9 @@
 import "./globals.css";
 import { Playfair_Display } from "next/font/google";
-
 import Navigation from "../components/Navigation/Navigation";
 import { Footer } from "../components/Footer/Footer";
+import { Metadata } from "next";
+import type { ReactNode } from "react";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -12,12 +13,12 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
 });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Bookie",
   description: "Your personal reading companion",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: {children: ReactNode}) {
   return (
     <html lang="en" className={playfair.variable}>
       <head>
