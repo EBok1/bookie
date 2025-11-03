@@ -1,7 +1,16 @@
 import "./globals.css";
+import { Playfair_Display } from "next/font/google";
 
 import Navigation from "../components/Navigation/Navigation";
 import { Footer } from "../components/Footer/Footer";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-playfair",
+});
 
 export const metadata = {
   title: "Bookie",
@@ -10,18 +19,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={playfair.variable}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin=""
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
-          rel="stylesheet"
-        />
         <link rel="icon" type="image/png" href="/logo.png" />
         <link
           rel="stylesheet"
