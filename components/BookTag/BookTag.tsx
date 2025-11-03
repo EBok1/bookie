@@ -1,4 +1,12 @@
-const BookTag = ({ tag, variant, hashtag, ...props }) => {
+import React from "react";
+
+interface BookTagProps extends React.HTMLAttributes<HTMLSpanElement> {
+  tag: string;
+  variant: "orange" | "grey" | "green";
+  hashtag?: boolean;
+}
+
+const BookTag = ({ tag, variant, hashtag, ...props }: BookTagProps) => {
   const variants = {
     orange:
       "inline-block bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium",
