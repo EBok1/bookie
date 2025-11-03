@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export function useFavorites(book = null) {
   const [liked, setLiked] = useState(false); // creates state: liked is current value, starts at false. setLiked: fucntion to update state
@@ -53,12 +53,12 @@ export function useFavorites(book = null) {
 
     // Set the liked button state based on whether book is already favorited
     setLiked(isBookFavorited);
-  }, [book]); // Re-run this effect whenever the book.id changes (different book)
+  }, [book?.id]); // Re-run this effect whenever the book.id changes (different book)
 
-  const getAllFavorites = () => {
+  const getAllFavorites = useCallback(() => {
     const storedFavorites = localStorage.getItem("favorites");
     return storedFavorites ? JSON.parse(storedFavorites) : [];
-  };
+  }, []);
 
   return {
     liked,
