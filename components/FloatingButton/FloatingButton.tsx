@@ -1,7 +1,8 @@
 "use client";
 import Link from "next/link";
+import type { ReactNode } from "react";
 
-export const FloatingButton = ({ children }) => {
+export const FloatingButton = ({ children }: {children: ReactNode}) => {
   return (
     <Link
       href="/addbook"
