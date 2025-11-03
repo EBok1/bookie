@@ -63,7 +63,7 @@ const AddBookPage = () => {
 
   useEffect(() => {
     fetchGenres();
-  }, []);
+  }, [fetchGenres]);
 
   return (
     <>

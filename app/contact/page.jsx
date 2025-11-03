@@ -36,7 +36,7 @@ const ContactPage = () => {
           Contact Us
         </h1>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-          Have a question or feedback? We'd love to hear from you!
+          Have a question or feedback? We&apos;d love to hear from you!
         </p>
       </div>
 
