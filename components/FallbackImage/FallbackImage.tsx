@@ -2,7 +2,16 @@
 import { useState } from "react";
 import Image from "next/image";
 
-const FallbackImage = ({ book }) => {
+type Book = {
+  coverImageUrl?: string;
+  title: string;
+};
+
+type FallbackImageProps = {
+  book: Book;
+};
+
+const FallbackImage = ({ book }: FallbackImageProps) => {
   const [imageError, setImageError] = useState(false);
 
   const handleImageError = () => {
