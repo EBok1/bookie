@@ -1,5 +1,16 @@
 "use client";
 
+import { BookData } from "@/app/types/bookData";
+
+type BookActionButtonsProps = {
+  editBook?: boolean;
+  bookData: BookData;
+  onSave: (id: string) => void;
+  onCancel: () => void;
+  onEdit: (bookData: BookData) => void;
+  onDelete: (id: string) => void;
+};
+
 export function BookActionButtons({
   editBook,
   bookData,
@@ -7,10 +18,10 @@ export function BookActionButtons({
   onCancel,
   onEdit,
   onDelete,
-}) {
+}: BookActionButtonsProps) {
   return (
     <>
-      {editBook !== null ? (
+      {editBook ? (
         <div className="mb-1">
           <button
             onClick={() => onSave(bookData.id)}
