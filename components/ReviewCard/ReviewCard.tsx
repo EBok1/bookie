@@ -1,5 +1,29 @@
 "use client";
 
+type Review = {
+  id: string;
+  reviewer: string; 
+  comment: string; 
+  rating: number;
+}
+
+type EditValues = {
+  reviewer: string; 
+  comment: string; 
+  rating: number; 
+}
+
+type ReviewCardProps = {
+  review: Review;
+  isEditing: string | null;
+  editValues: EditValues;
+  onEditValuesChange: (values: EditValues) => void;
+  onStartEdit: (review: Review) => void;
+  onSaveEdit: (id: string) => void;
+  onCancelEdit: () => void; 
+  onDelete: (id: string) => void;
+}
+
 export function ReviewCard({
   review,
   isEditing,
@@ -9,7 +33,7 @@ export function ReviewCard({
   onSaveEdit,
   onCancelEdit,
   onDelete,
-}) {
+}: ReviewCardProps) {
   return (
     <article className="rounded-md mt-4 px-3 py-1 border-[#bccdbc] border-2">
       {isEditing === review.id ? (
