@@ -1,17 +1,12 @@
 "use client";
+import { EditValues } from "@/app/types/editValues";
 
 type Review = {
   id: string;
-  reviewer: string; 
-  comment: string; 
+  reviewer: string;
+  comment: string;
   rating: number;
-}
-
-type EditValues = {
-  reviewer: string; 
-  comment: string; 
-  rating: number; 
-}
+};
 
 type ReviewCardProps = {
   review: Review;
@@ -20,9 +15,9 @@ type ReviewCardProps = {
   onEditValuesChange: (values: EditValues) => void;
   onStartEdit: (review: Review) => void;
   onSaveEdit: (id: string) => void;
-  onCancelEdit: () => void; 
+  onCancelEdit: () => void;
   onDelete: (id: string) => void;
-}
+};
 
 export function ReviewCard({
   review,

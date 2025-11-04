@@ -2,13 +2,25 @@
 import { useState } from "react";
 import { validateForm } from "../utils/validateForm";
 import { addReview, deleteReview, editReview } from "../utils/reviewApi";
+import { useRouter } from "next/navigation";
+import { FormEvent } from "react";
+import { ReviewData } from "@/app/types/review";
+type Router = ReturnType<typeof useRouter>;
 
-export function useReviewManagement(initialReviews = [], params, router) {
-  const [rating, setRating] = useState();
-  const [bookCommentsById, setBookCommentsById] = useState(
+export function useReviewManagement(
+  initialReviews: ReviewData[],
+  params: { id?: string },
+  router: Router
+) {
+  const [rating, setRating] = useState<number | undefined>();
+  const [bookCommentsById, setBookCommentsById] = useState<ReviewData[]>(
     initialReviews || []
   );
-  const [errorMessage, setErrorMessage] = useState({});
+  const [errorMessage, setErrorMessage] = useState<{
+    rating?: string;
+    reviewerName?: string;
+    reviewerComment?: string;
+  }>({});
   const [isSubmitting, setIssubmitting] = useState(false);
   const [editingReviewId, setEditingReviewId] = useState(null);
   const [editValues, setEditValues] = useState({});
@@ -22,7 +34,7 @@ export function useReviewManagement(initialReviews = [], params, router) {
     edit: "",
   });
 
-  async function handleReviewSubmit(e) {
+  async function handleReviewSubmit(e: FormEvent) {
     e.preventDefault();
     setErrorMessage({});
     setMessages({ ...messages, submit: "" });
@@ -57,16 +69,16 @@ export function useReviewManagement(initialReviews = [], params, router) {
 
     setMessages({ ...messages, submit: "Review is added successfully!" });
     setFormData({ reviewerName: "", reviewerComment: "" });
-    setRating();
+    setRating(undefined);
     if (result.data && result.data[0]) {
       setBookCommentsById([...bookCommentsById, result.data[0]]);
     }
     setIssubmitting(false);
-    router.refresh(); 
+    router.refresh();
     setTimeout(() => setMessages({ ...messages, submit: "" }), 5000);
   }
 
-  async function handleDeleteReview(reviewId) {
+  async function handleDeleteReview(reviewId: string) {
     const result = await deleteReview(reviewId);
     if (result.error) {
       setMessages({
@@ -80,11 +92,11 @@ export function useReviewManagement(initialReviews = [], params, router) {
     setBookCommentsById(
       bookCommentsById.filter((review) => review.id !== reviewId)
     );
-    router.refresh(); 
+    router.refresh();
     setTimeout(() => setMessages({ ...messages, delete: "" }), 5000);
   }
 
-  function startEditing(review) {
+  function startEditing(review: any) {
     setEditingReviewId(review.id);
     setEditValues({
       reviewer: review.reviewer,
@@ -98,7 +110,7 @@ export function useReviewManagement(initialReviews = [], params, router) {
     setEditValues({});
   }
 
-  async function saveEdit(reviewId) {
+  async function saveEdit(reviewId: string) {
     try {
       const result = await editReview(reviewId, editValues);
       console.log("✅ Save edit result:", { result });
@@ -119,7 +131,7 @@ export function useReviewManagement(initialReviews = [], params, router) {
           review.id === reviewId ? { ...review, ...editValues } : review
         )
       );
-      router.refresh(); 
+      router.refresh();
       setTimeout(() => setMessages({ ...messages, edit: "" }), 5000);
     } catch (err) {
       console.error("❌ Save edit catch error:", err);
@@ -135,10 +147,10 @@ export function useReviewManagement(initialReviews = [], params, router) {
     setRating,
     bookCommentsById,
     reviewerName: formData.reviewerName,
-    setReviewerName: (value) =>
+    setReviewerName: (value: string) =>
       setFormData({ ...formData, reviewerName: value }),
     reviewerComment: formData.reviewerComment,
-    setReviewerComment: (value) =>
+    setReviewerComment: (value: string) =>
       setFormData({ ...formData, reviewerComment: value }),
     errorMessage,
     isSubmitting,

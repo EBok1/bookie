@@ -3,8 +3,14 @@ import { useReviewFilter } from "../BookReview/hooks/useReviewFilter";
 import { useReviewManagement } from "../BookReview/hooks/useReviewManagement";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
+import { ReviewData } from "@/app/types/review";
 
-export function ReviewFilters({ reviewData }) {
+
+type ReviewFiltersProps = {
+  reviewData: ReviewData[]; 
+}
+
+export function ReviewFilters({ reviewData }: ReviewFiltersProps) {
   const params = useParams();
   const router = useRouter();
   const { filterReview, setFilterReview, updateSearchParams } =

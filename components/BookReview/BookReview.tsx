@@ -2,8 +2,13 @@
 import { ReviewForm } from "../ReviewForm/ReviewForm";
 import { ReviewFilters } from "../ReviewFilters/ReviewFilters";
 import { ReviewList } from "../ReviewList/ReviewList";
+import { ReviewData } from "@/app/types/review";
 
-function BookReview({ reviewData }) {
+type BookReviewProps = {
+  reviewData: ReviewData[]; 
+}
+
+function BookReview({ reviewData }: BookReviewProps) {
   return (
     <>
       <ReviewForm reviewData={reviewData} />

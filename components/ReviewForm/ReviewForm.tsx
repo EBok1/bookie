@@ -3,8 +3,13 @@ import StarRating from "../StarRating/StarRating";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useReviewManagement } from "../BookReview/hooks/useReviewManagement";
+import { ReviewData } from "@/app/types/review";
 
-export function ReviewForm({reviewData}) {
+type ReviewFormProps = {
+  reviewData: ReviewData[]; 
+}
+
+export function ReviewForm({reviewData}: ReviewFormProps) {
   const params = useParams();
   const router = useRouter();
   const {
@@ -81,7 +86,7 @@ export function ReviewForm({reviewData}) {
             value={reviewerComment}
             onChange={(e) => setReviewerComment(e.target.value)}
             required
-            maxLength="50"
+            maxLength={50}
           />
           {errorMessage.reviewerComment && (
             <p className="text-red-500 text-sm mt-1">
