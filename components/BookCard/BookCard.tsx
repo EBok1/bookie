@@ -3,8 +3,13 @@ import LikeButton from "../FavoriteButton/FavoriteButton";
 import FallbackImage from "../FallbackImage/FallbackImage";
 import BookTag from "../BookTag/BookTag";
 import { AverageBookRating } from "../AverageBookRating/AverageBookRating";
+import { Book } from "@/app/types/book";
 
-function BookCard({ book }) {
+type BookCardProps = {
+  book: Book;
+};
+
+function BookCard({ book }: BookCardProps) {
   return (
     <Link
       key={book.id}
