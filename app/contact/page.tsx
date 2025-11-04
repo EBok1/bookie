@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ const ContactPage = () => {
   });
   const [submitStatus, setSubmitStatus] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -18,7 +18,7 @@ const ContactPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Simulate form submission
     setSubmitStatus("Thank you for your message! We'll get back to you soon.");
@@ -124,7 +124,7 @@ const ContactPage = () => {
                 value={formData.message}
                 onChange={handleChange}
                 required
-                rows="5"
+                rows={5}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 resize-none"
                 placeholder="Tell us what's on your mind..."
               />
