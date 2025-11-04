@@ -1,4 +1,10 @@
-const BookDetails = ({ bookData }) => {
+import { BookData } from "@/app/types/bookData";
+
+type BookDetailsProps = {
+  bookData: BookData;
+}
+
+const BookDetails = ({ bookData }: BookDetailsProps) => {
   return (
     <div>
       <h3 className="text-xl font-bold text-gray-800 mb-2 font-playfair">
