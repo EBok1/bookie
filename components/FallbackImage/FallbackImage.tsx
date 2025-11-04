@@ -28,6 +28,7 @@ const FallbackImage = ({ book }: FallbackImageProps) => {
           height={384}
           className="h-96 w-auto"
           onError={handleImageError}
+          
         />
       ) : (
         <div className="h-96 flex items-center justify-center">
