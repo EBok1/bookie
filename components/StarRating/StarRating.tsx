@@ -1,11 +1,14 @@
 "use client";
 
 type StarRatingProps = {
-  rating: number;
+  rating: number | undefined;
   onRatingChange: (param: number) => void;
 };
 
-export default function StarRating({ rating, onRatingChange }: StarRatingProps) {
+export default function StarRating({
+  rating,
+  onRatingChange,
+}: StarRatingProps) {
   return (
     <>
       <div className="mt-2">
@@ -16,7 +19,7 @@ export default function StarRating({ rating, onRatingChange }: StarRatingProps) 
             <button
               key={star} // helps react track star (required for lists)
               className="cursor-pointer text-2xl"
-              style={{ color: star <= rating ? "gold" : "gray" }} // if current rating is greater/equal to star number → gold otherwise gray
+              style={{ color: star <= (rating ?? 0) ? "gold" : "gray" }}
               onClick={(e) => {
                 // event handlers function that runs when clicked
                 e.stopPropagation(); // stops event bubbling (prevents click from traveling up)
