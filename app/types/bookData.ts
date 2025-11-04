@@ -7,4 +7,7 @@ export type BookData = {
     description: string;
     publishedYear: number;
     language: string;
+    pages: number;
+    publisher: string;
+    format: string; 
   };
