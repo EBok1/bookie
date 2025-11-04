@@ -2,7 +2,17 @@
 import Link from "next/link";
 import { useDropdown } from "./hooks/useDropdown";
 
-function Dropdown({ onToggle, menuItems }) {
+type MenuItem = {
+  href: string;
+  label: string;
+}
+
+type DropdownProps = {
+  onToggle: () => void;
+  menuItems: MenuItem[];
+}
+
+function Dropdown({ onToggle, menuItems }: DropdownProps) {
     const {isOpen, toggleDropdown, closeDropdown} = useDropdown(onToggle);
    
     return (
