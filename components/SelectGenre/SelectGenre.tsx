@@ -1,10 +1,20 @@
+import { ChangeEvent } from "react";
+
+type SelectGenreProps = {
+  value: string;
+  onChange: (event: ChangeEvent<HTMLSelectElement>) => void;
+  options: string[];
+  loading: boolean;
+  error: string | undefined;
+};
+
 export const SelectGenre = ({ 
     value, 
     onChange, 
     options, 
     loading, 
     error 
-  }) => {
+  }: SelectGenreProps) => {
     return (
       <>
         <select
