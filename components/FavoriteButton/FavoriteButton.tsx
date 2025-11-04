@@ -1,7 +1,12 @@
 "use client";
 import { useFavorites } from "./hooks/useFavorites";
+import { Book } from "@/app/types/book";
 
-function LikeButton({ book }) {
+type LikeButtonProps = {
+  book: Book;
+}
+
+function LikeButton({ book }: LikeButtonProps) {
   const { liked, toggleLike } = useFavorites(book);
   return (
     <button

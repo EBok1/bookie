@@ -1,7 +1,8 @@
 "use client";
+import { Book } from "@/app/types/book";
 import { useState, useEffect, useCallback } from "react";
 
-export function useFavorites(book = null) {
+export function useFavorites(book: Book) {
   const [liked, setLiked] = useState(false); // creates state: liked is current value, starts at false. setLiked: fucntion to update state
 
   const toggleLike = () => {
@@ -10,7 +11,7 @@ export function useFavorites(book = null) {
     const storedFavorites = localStorage.getItem("favorites");
 
     // Convert the string to an array, or create empty array if nothing stored
-    const favoritesArray = storedFavorites ? JSON.parse(storedFavorites) : [];
+    const favoritesArray: Book[] = storedFavorites ? JSON.parse(storedFavorites) : [];
 
     // Check if the current book is already in the favorites array by comparing IDs
     const isAlreadyFavorited = favoritesArray.some(
@@ -44,7 +45,7 @@ export function useFavorites(book = null) {
     const storedFavorites = localStorage.getItem("favorites");
 
     // Convert the string back to an array, or create empty array if nothing was stored
-    const favoritesArray = storedFavorites ? JSON.parse(storedFavorites) : [];
+    const favoritesArray: Book[] = storedFavorites ? JSON.parse(storedFavorites) : [];
 
     // Check if the current book is already in the favorites array by comparing IDs
     const isBookFavorited = favoritesArray.some(
@@ -57,7 +58,7 @@ export function useFavorites(book = null) {
 
   const getAllFavorites = useCallback(() => {
     const storedFavorites = localStorage.getItem("favorites");
-    return storedFavorites ? JSON.parse(storedFavorites) : [];
+    return storedFavorites ? JSON.parse(storedFavorites) as Book[] : [];
   }, []);
 
   return {
