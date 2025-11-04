@@ -1,5 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { ChangeEvent } from "react";
+
+type ISBNFieldProps = {
+  value: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  error?: string;
+  infoOpen: boolean;
+  onToggleInfo: () => void;
+};
 
 export const ISBNField = ({
   value,
@@ -7,7 +16,7 @@ export const ISBNField = ({
   error,
   infoOpen,
   onToggleInfo,
-}) => {
+}: ISBNFieldProps ) => {
   return (
     <>
       <div className="flex items-center mt-4 mb-1">
@@ -48,8 +57,8 @@ export const ISBNField = ({
           } focus:border-blue-500`}
           value={value}
           onChange={onChange}
-          minLength="10"
-          maxLength="13"
+          minLength={10}
+          maxLength={13}
         />
       </div>
       {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
