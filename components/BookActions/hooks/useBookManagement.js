@@ -31,7 +31,6 @@ export function useBookManagement(bookData, router) {
   async function saveEdit(bookId) {
     try {
       const result = await updateBook(bookId, editValues);
-      console.log("✅ Save edit result:", { result });
       if (result.error) {
         console.error("❌ Save edit Supabase error:", result.error);
         setMessages({

@@ -3,8 +3,13 @@ import { useRouter } from "next/navigation";
 import { useBookManagement } from "./hooks/useBookManagement";
 import { BookEditForm } from "../BookEditForm/BookEditForm";
 import { BookActionButtons } from "../BookActionButtons/BookActionButtons";
+import type { BookData } from "@/app/types/bookData";
 
-export const BookActions = ({ bookData }) => {
+type BookActionsProps = {
+  bookData: BookData;
+};
+
+export const BookActions = ({ bookData }: BookActionsProps) => {
   const router = useRouter();
   const {
     editBook,
@@ -20,6 +25,13 @@ export const BookActions = ({ bookData }) => {
 
   return (
     <>
+      {editMessage && (
+        <p className="text-green-600 text-sm mb-4 font-medium">{editMessage}</p>
+      )}
+      {deleteMessage && (
+        <p className="text-red-600 text-sm mb-4 font-medium">{deleteMessage}</p>
+      )}
+
       {editBook !== null ? (
         <>
           <BookEditForm

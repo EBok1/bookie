@@ -1,9 +1,9 @@
 "use client";
 
-import { BookData } from "@/app/types/bookData";
+import type { BookData } from "@/app/types/bookData";
 
 type BookActionButtonsProps = {
-  editBook?: boolean;
+  editBook: string | null;
   bookData: BookData;
   onSave: (id: string) => void;
   onCancel: () => void;
