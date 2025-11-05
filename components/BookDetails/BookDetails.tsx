@@ -1,4 +1,4 @@
-import { BookData } from "@/app/types/bookData";
+import type { BookData } from "@/app/types/bookData";
 
 type BookDetailsProps = {
   bookData: BookData;

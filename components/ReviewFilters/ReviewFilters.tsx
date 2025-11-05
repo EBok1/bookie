@@ -3,7 +3,7 @@ import { useReviewFilter } from "../BookReview/hooks/useReviewFilter";
 import { useReviewManagement } from "../BookReview/hooks/useReviewManagement";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { ReviewData } from "@/app/types/review";
+import type { ReviewData } from "@/app/types/review";
 
 
 type ReviewFiltersProps = {

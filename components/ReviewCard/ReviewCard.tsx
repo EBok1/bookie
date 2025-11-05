@@ -1,5 +1,5 @@
 "use client";
-import { EditValues } from "@/app/types/editValues";
+import type { EditValues } from "@/app/types/editValues";
 
 type Review = {
   id: string;

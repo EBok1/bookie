@@ -1,6 +1,6 @@
 "use client";
 import { useFavorites } from "./hooks/useFavorites";
-import { Book } from "@/app/types/book";
+import type { Book } from "@/app/types/book";
 
 type LikeButtonProps = {
   book: Book;

@@ -3,7 +3,7 @@ import LikeButton from "../FavoriteButton/FavoriteButton";
 import FallbackImage from "../FallbackImage/FallbackImage";
 import BookTag from "../BookTag/BookTag";
 import { AverageBookRating } from "../AverageBookRating/AverageBookRating";
-import { Book } from "@/app/types/book";
+import type { Book } from "@/app/types/book";
 
 type BookCardProps = {
   book: Book;

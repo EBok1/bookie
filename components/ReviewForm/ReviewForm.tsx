@@ -3,7 +3,7 @@ import StarRating from "../StarRating/StarRating";
 import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useReviewManagement } from "../BookReview/hooks/useReviewManagement";
-import { ReviewData } from "@/app/types/review";
+import type { ReviewData } from "@/app/types/review";
 
 type ReviewFormProps = {
   reviewData: ReviewData[]; 

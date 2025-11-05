@@ -1,5 +1,5 @@
 "use client";
-import { Book } from "@/app/types/book";
+import type { Book } from "@/app/types/book";
 import { useState, useEffect, useCallback } from "react";
 
 export function useFavorites(book: Book) {
