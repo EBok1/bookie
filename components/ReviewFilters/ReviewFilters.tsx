@@ -1,25 +1,14 @@
 "use client";
 import { useReviewFilter } from "../BookReview/hooks/useReviewFilter";
-import { useReviewManagement } from "../BookReview/hooks/useReviewManagement";
-import { useParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import type { ReviewData } from "@/app/types/review";
-
+import type { useReviewManagement } from "../BookReview/hooks/useReviewManagement";
 
 type ReviewFiltersProps = {
-  reviewData: ReviewData[]; 
-}
+  reviewManagement: ReturnType<typeof useReviewManagement>;};
 
-export function ReviewFilters({ reviewData }: ReviewFiltersProps) {
-  const params = useParams();
-  const router = useRouter();
+export function ReviewFilters({ reviewManagement }: ReviewFiltersProps) {
   const { filterReview, setFilterReview, updateSearchParams } =
     useReviewFilter();
-  const { deleteMessage, editMessage } = useReviewManagement(
-    reviewData,
-    params,
-    router
-  );
+  const { deleteMessage, editMessage } = reviewManagement;
 
   return (
     <>

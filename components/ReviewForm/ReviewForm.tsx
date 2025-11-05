@@ -1,17 +1,12 @@
 "use client";
 import StarRating from "../StarRating/StarRating";
-import { useParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import { useReviewManagement } from "../BookReview/hooks/useReviewManagement";
-import type { ReviewData } from "@/app/types/review";
+import type { useReviewManagement } from "../BookReview/hooks/useReviewManagement";
 
 type ReviewFormProps = {
-  reviewData: ReviewData[]; 
-}
+  reviewManagement: ReturnType<typeof useReviewManagement>;
+};
 
-export function ReviewForm({reviewData}: ReviewFormProps) {
-  const params = useParams();
-  const router = useRouter();
+export function ReviewForm({ reviewManagement }: ReviewFormProps) {
   const {
     rating,
     setRating,
@@ -23,7 +18,7 @@ export function ReviewForm({reviewData}: ReviewFormProps) {
     setReviewerComment,
     handleReviewSubmit,
     isSubmitting,
-  } = useReviewManagement(reviewData, params, router);
+  } = reviewManagement;
 
   return (
     <div className="bg-white p-4 my-8 rounded-lg">

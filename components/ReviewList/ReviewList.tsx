@@ -1,18 +1,13 @@
 "use client";
 import { ReviewCard } from "../ReviewCard/ReviewCard";
 import { useReviewFilter } from "../BookReview/hooks/useReviewFilter";
-import { useReviewManagement } from "../BookReview/hooks/useReviewManagement";
-import { useParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import type { ReviewData } from "@/app/types/review";
+import type { useReviewManagement } from "../BookReview/hooks/useReviewManagement";
 
 type ReviewListProps = {
-  reviewData: ReviewData[]; 
-}
+  reviewManagement: ReturnType<typeof useReviewManagement>;
+};
 
-export function ReviewList({ reviewData }: ReviewListProps) {
-  const params = useParams();
-  const router = useRouter();
+export function ReviewList({ reviewManagement }: ReviewListProps) {
   const { filterReview } = useReviewFilter();
   const {
     bookCommentsById: reviews,
@@ -23,7 +18,7 @@ export function ReviewList({ reviewData }: ReviewListProps) {
     saveEdit,
     cancelEditing,
     handleDeleteReview,
-  } = useReviewManagement(reviewData, params, router);
+  } = reviewManagement;
 
   const filteredReviews = reviews.filter((review) => {
     if (filterReview === 0) {

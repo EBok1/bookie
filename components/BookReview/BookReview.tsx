@@ -3,21 +3,26 @@ import { ReviewForm } from "../ReviewForm/ReviewForm";
 import { ReviewFilters } from "../ReviewFilters/ReviewFilters";
 import { ReviewList } from "../ReviewList/ReviewList";
 import type { ReviewData } from "@/app/types/review";
+import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useReviewManagement } from "../BookReview/hooks/useReviewManagement";
 
 type BookReviewProps = {
-  reviewData: ReviewData[]; 
-}
+  reviewData: ReviewData[];
+};
 
 function BookReview({ reviewData }: BookReviewProps) {
+  const params = useParams();
+  const router = useRouter();
+  const reviewManagement = useReviewManagement(reviewData, params, router);
+
   return (
     <>
-      <ReviewForm reviewData={reviewData} />
+      <ReviewForm reviewManagement={reviewManagement} />
 
-      <ReviewFilters reviewData={reviewData}
-      />
+      <ReviewFilters reviewManagement={reviewManagement} />
 
-      <ReviewList reviewData={reviewData}
-      />
+      <ReviewList reviewManagement={reviewManagement} />
     </>
   );
 }
