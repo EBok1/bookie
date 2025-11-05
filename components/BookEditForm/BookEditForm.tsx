@@ -1,7 +1,20 @@
 "use client";
+import type { BookData } from "@/app/types/bookData";
 
-export function BookEditForm({ editValues, onEditValuesChange }) {
-  const fields = [
+type BookEditFormProps = {
+  editValues: Partial<BookData>;
+  onEditValuesChange: (values: Partial<BookData>) => void;
+};
+
+export function BookEditForm({
+  editValues,
+  onEditValuesChange,
+}: BookEditFormProps) {
+  const fields: Array<{
+    name: keyof BookData;
+    label: string;
+    className: string;
+  }> = [
     {
       name: "title",
       label: "Title",
