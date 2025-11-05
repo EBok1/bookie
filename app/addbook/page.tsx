@@ -11,16 +11,26 @@ import { SelectGenre } from "../../components/SelectGenre/SelectGenre";
 import { SubmitButton } from "../../components/SubmitButton/SubmitButton";
 import { useBookForm } from "./hooks/useBookForm";
 import ReturnButton from "../../components/ReturnButton/ReturnButton";
+import type { FormEvent } from "react";
+
+type ErrorMessage = {
+  title?: string;
+  author?: string;
+  isbn?: string;
+  genre?: string;
+  publishedYear?: string;
+  language?: string;
+};
 
 const AddBookPage = () => {
   const { bookFormData, setBookFormData } = useBookForm();
-  const [errorMessage, setErrorMessage] = useState({});
+  const [errorMessage, setErrorMessage] = useState<ErrorMessage>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
   const [openInfoButton, setOpenInfoButton] = useState(false);
   const router = useRouter();
 
-  async function handleAddBookSubmit(e) {
+  async function handleAddBookSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setErrorMessage({});
     setSubmitMessage("");
@@ -85,7 +95,7 @@ const AddBookPage = () => {
               }
               error={errorMessage.title}
               required
-              minLength="2"
+              minLength={2}
             />
 
             <h2 className="mt-4 mb-1">Auteur(s)*</h2>
@@ -100,7 +110,7 @@ const AddBookPage = () => {
               }
               error={errorMessage.author}
               required
-              maxLength="50"
+              maxLength={50}
             />
 
             <ISBNField
@@ -149,7 +159,7 @@ const AddBookPage = () => {
                   description: e.target.value,
                 })
               }
-              maxLength="500"
+              maxLength={500}
             />
 
             <h2 className="mt-4 mb-1">Published Year*</h2>
@@ -164,7 +174,7 @@ const AddBookPage = () => {
                 })
               }
               error={errorMessage.publishedYear}
-              maxLength="4"
+              maxLength={4}
             />
 
             <h2 className="mt-4 mb-1">Language*</h2>
@@ -181,11 +191,7 @@ const AddBookPage = () => {
               required
             />
 
-            <SubmitButton
-              isLoading={isSubmitting}
-              onSubmit={handleAddBookSubmit}
-              submitText="Add Book"
-            />
+            <SubmitButton isLoading={isSubmitting} submitText="Add Book" />
           </form>
         </div>
       </div>

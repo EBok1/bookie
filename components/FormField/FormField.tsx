@@ -1,7 +1,7 @@
-import { ChangeEvent } from "react";
+import type { ChangeEvent } from "react";
 
 type FormFieldProps = {
-  type: string;
+  type?: string;
   placeholder: string;
   value: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;

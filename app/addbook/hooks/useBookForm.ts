@@ -1,7 +1,18 @@
 import { useState } from "react";
 
+type BookFormData = {
+  title: string;
+  author: string;
+  genre: string;
+  isbn: string;
+  language: string;
+  publishedYear: string;
+  description: string;
+  coverImage: File | null;
+};
+
 export const useBookForm = () => {
-  const [bookFormData, setBookFormData] = useState({
+  const [bookFormData, setBookFormData] = useState<BookFormData>({
     title: "",
     author: "",
     genre: "",
