@@ -1,5 +1,6 @@
 "use client";
-import { useState, ChangeEvent, FormEvent } from "react";
+import type { ChangeEvent, FormEvent } from "react";
+import { useState } from "react";
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
