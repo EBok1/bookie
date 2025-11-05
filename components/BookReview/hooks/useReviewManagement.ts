@@ -2,8 +2,8 @@
 import { useState } from "react";
 import { validateForm } from "../utils/validateForm";
 import { addReview, deleteReview, editReview } from "../utils/reviewApi";
-import { useRouter } from "next/navigation";
-import { FormEvent } from "react";
+import type { useRouter } from "next/navigation";
+import type { FormEvent } from "react";
 import type { ReviewData } from "@/app/types/review";
 type Router = ReturnType<typeof useRouter>;
 
