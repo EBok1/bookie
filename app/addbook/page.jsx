@@ -33,11 +33,7 @@ const AddBookPage = () => {
 
     setIsSubmitting(true);
 
-    console.log({ bookFormData });
-
     const newBook = createBookObject(bookFormData);
-
-    console.log({ newBook });
 
     const response = await fetch("/api/books", {
       method: "POST",

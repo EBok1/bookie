@@ -9,7 +9,9 @@ export async function GET() {
   }
   try {
     const { data, error } = await supabase.from("books").select("*");
-    console.log(data);
+    if (error) {
+      console.error("❌ Get books query error:", error);
+    }
     return Response.json({ data });
   } catch (err) {
     console.error("❌ Get books error:", err);
@@ -39,9 +41,8 @@ export async function POST(request) {
       .insert([bookData])
       .select();
 
-    console.log("✅ Add book result:", { data, error });
-
     if (error) {
+      console.error("❌ Add book error:", error);
       return Response.json({ data: null, error }, { status: 400 });
     }
 

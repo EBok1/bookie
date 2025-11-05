@@ -12,7 +12,9 @@ export async function GET(request, { params }) {
     const { data, error } = await supabase.from("books").select().eq("id", id);
     const book = data && data.length > 0 ? data[0] : null;
 
-    console.log("✅ Get books result", ":", { data, error });
+    if (error) {
+      console.error("❌ Get book error:", error);
+    }
     return Response.json({ data: book });
   } catch (err) {
     console.error("❌ Get books error:", err);
@@ -44,7 +46,10 @@ export async function PUT(request, { params }) {
         language: updateData.language,
       })
       .eq("id", id);
-    console.log("✅ Update book", id, ":", { data, error });
+    
+    if (error) {
+      console.error("❌ Update book error:", error);
+    }
     return Response.json({ data: data || [] });
   } catch (err) {
     console.error("❌ Update book error:", err);
@@ -63,18 +68,23 @@ export async function DELETE(request, { params }) {
   }
 
   try {
-    const { data: commentsData, error: commentsError } = await supabase
+    const { error: commentsError } = await supabase
       .from("comments")
       .delete()
       .eq("book_id", id);
-    console.log("Deleted comments for book", id);
+    
+    if (commentsError) {
+      console.error("❌ Delete comments error:", commentsError);
+    }
 
     const { data: bookData, error: bookError } = await supabase
       .from("books")
       .delete()
       .eq("id", id);
 
-    console.log("✅ Delete book", id);
+    if (bookError) {
+      console.error("❌ Delete book error:", bookError);
+    }
     return Response.json({ data: bookData || [] });
   } catch (err) {
     console.error("❌ Delete book error:", err);
