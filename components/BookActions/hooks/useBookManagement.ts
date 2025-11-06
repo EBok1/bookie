@@ -1,16 +1,19 @@
 "use client";
 import { useState } from "react";
 import { updateBook, deleteBook } from "../utils/bookApi";
+import type { BookData } from "@/app/types/bookData";
+import type { useRouter } from "next/navigation";
+type Router = ReturnType<typeof useRouter>;
 
-export function useBookManagement(bookData, router) {
-  const [editBook, setEditBook] = useState(null);
+export function useBookManagement( router: Router ) {
+  const [editBook, setEditBook] = useState<string | null>(null);
   const [editValues, setEditValues] = useState({});
   const [messages, setMessages] = useState({
     edit: "",
     delete: "",
   });
 
-  function startEditing(book) {
+  function startEditing(book: BookData) {
     setEditBook(book.id);
     setEditValues({
       title: book.title,
@@ -28,7 +31,7 @@ export function useBookManagement(bookData, router) {
     setEditValues({});
   }
 
-  async function saveEdit(bookId) {
+  async function saveEdit(bookId: string) {
     try {
       const result = await updateBook(bookId, editValues);
       if (result.error) {
@@ -55,7 +58,7 @@ export function useBookManagement(bookData, router) {
     }
   }
 
-  async function handleDeleteBook(bookId) {
+  async function handleDeleteBook(bookId: string) {
     const result = await deleteBook(bookId);
     if (result.error) {
       setMessages({
