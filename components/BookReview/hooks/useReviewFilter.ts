@@ -10,10 +10,10 @@ export function useReviewFilter() {
 
   useEffect(() => {
     const filterFromUrl = searchParams?.get("rating");
-    setFilterReview(parseInt(filterFromUrl) || 0);
+    setFilterReview(parseInt(filterFromUrl || "0"));
   }, [searchParams]);
 
-  function updateSearchParams(rating) {
+  function updateSearchParams(rating: string) {
     const params = new URLSearchParams(searchParams);
     params.set("rating", rating);
     router.push(`?${params.toString()}`, { scroll: false });
