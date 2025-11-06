@@ -4,10 +4,22 @@ import { FloatingButton } from "../components/FloatingButton/FloatingButton";
 import { supabase } from "./supabaseClient";
 import Image from "next/image";
 
+type Reviews = {
+  id: string;
+  reviewer: string;
+  comment: string;
+  rating: number;
+  book_id: string;
+};
+
 // Force dynamic rendering - fetch fresh data on every request
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
+  if (!supabase) {
+    return <div>Error: Database connection not available</div>;
+  }
+
   // Fetch books directly from Supabase (server-side)
   const { data: booksData } = await supabase.from("books").select();
 
@@ -34,7 +46,8 @@ export default async function HomePage() {
       averageRating = "Not available";
     } else {
       const sum = bookReviews.reduce(
-        (accumulator, currentValue) => accumulator + currentValue.rating,
+        (accumulator: number, currentValue: Reviews) =>
+          accumulator + currentValue.rating,
         0
       );
       averageRating = Math.round((sum / bookReviews.length) * 10) / 10;
@@ -80,11 +93,7 @@ export default async function HomePage() {
       </h2>
       <BookCardGrid>
         {enhancedBooksData?.map((book) => (
-          <BookCard
-            key={book.id}
-            book={book}
-            averageRating={book.calculatedAverage}
-          />
+          <BookCard key={book.id} book={book} />
         ))}
       </BookCardGrid>
       <FloatingButton>+Add Book</FloatingButton>
