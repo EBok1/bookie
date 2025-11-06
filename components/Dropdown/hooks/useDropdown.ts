@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export function useDropdown(onToggle) {
+export function useDropdown(onToggle: (values: boolean) => void) {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => {
