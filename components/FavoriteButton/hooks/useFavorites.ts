@@ -2,7 +2,7 @@
 import type { Book } from "@/app/types/book";
 import { useState, useEffect, useCallback } from "react";
 
-export function useFavorites(book: Book) {
+export function useFavorites(book?: Book) {
   const [liked, setLiked] = useState(false); // creates state: liked is current value, starts at false. setLiked: fucntion to update state
 
   const toggleLike = () => {
@@ -54,7 +54,7 @@ export function useFavorites(book: Book) {
 
     // Set the liked button state based on whether book is already favorited
     setLiked(isBookFavorited);
-  }, [book?.id]); // Re-run this effect whenever the book.id changes (different book)
+  }, [book]); // Re-run this effect whenever the book.id changes (different book)
 
   const getAllFavorites = useCallback(() => {
     const storedFavorites = localStorage.getItem("favorites");

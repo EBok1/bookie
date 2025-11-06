@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import BookCard from "../../components/BookCard/BookCard";
 import BookCardGrid from "../../components/BookCardGrid/BookCardGrid";
 import { useFavorites } from "../../components/FavoriteButton/hooks/useFavorites";
+import type { Book } from "../types/book";
 
 function FavoritesList() {
-  const [favoriteBooks, setFavoriteBooks] = useState([]);
+  const [favoriteBooks, setFavoriteBooks] = useState<Book[]>([]);
   const { getAllFavorites } = useFavorites();
 
   useEffect(() => {
