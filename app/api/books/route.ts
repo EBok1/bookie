@@ -19,7 +19,7 @@ export async function GET() {
   }
 }
 
-export async function POST(request) {
+export async function POST(request: Request) {
   if (!supabase) {
     console.error(
       "❌ Supabase client not initialized. Check your environment variables."
@@ -47,10 +47,15 @@ export async function POST(request) {
     }
 
     return Response.json({ data, error: null }, { status: 201 });
-  } catch (err) {
+  } catch (err: unknown) {
     console.error("❌ Add book error:", err);
     return Response.json(
-      { data: null, error: { message: err.message } },
+      {
+        data: null,
+        error: {
+          message: err instanceof Error ? err.message : "Unknown error",
+        },
+      },
       { status: 500 }
     );
   }
