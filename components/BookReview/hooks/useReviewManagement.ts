@@ -21,9 +21,18 @@ export function useReviewManagement(
     reviewerName?: string;
     reviewerComment?: string;
   }>({});
+
+  const defaultEditValues = {
+    id: "",
+    book_id: "",
+    reviewer: "",
+    comment: "",
+    rating: 0,
+  };
+
   const [isSubmitting, setIssubmitting] = useState(false);
-  const [editingReviewId, setEditingReviewId] = useState(null);
-  const [editValues, setEditValues] = useState({});
+  const [editingReviewId, setEditingReviewId] = useState<string>();
+  const [editValues, setEditValues] = useState<ReviewData>(defaultEditValues);
   const [formData, setFormData] = useState({
     reviewerName: "",
     reviewerComment: "",
@@ -51,10 +60,10 @@ export function useReviewManagement(
 
     setIssubmitting(true);
     const reviewData = {
-      book_id: params.id,
+      book_id: params.id || "",
       reviewer: formData.reviewerName,
       comment: formData.reviewerComment,
-      rating: rating,
+      rating: rating || 0,
     };
 
     const result = await addReview(reviewData);
@@ -96,24 +105,19 @@ export function useReviewManagement(
     setTimeout(() => setMessages({ ...messages, delete: "" }), 5000);
   }
 
-  function startEditing(review: any) {
+  function startEditing(review: ReviewData) {
     setEditingReviewId(review.id);
-    setEditValues({
-      reviewer: review.reviewer,
-      comment: review.comment,
-      rating: review.rating,
-    });
+    setEditValues(review);
   }
 
   function cancelEditing() {
-    setEditingReviewId(null);
-    setEditValues({});
+    setEditingReviewId("");
+    setEditValues(defaultEditValues);
   }
 
   async function saveEdit(reviewId: string) {
     try {
       const result = await editReview(reviewId, editValues);
-      console.log("✅ Save edit result:", { result });
       if (result.error) {
         console.error("❌ Save edit Supabase error:", result.error);
         setMessages({
@@ -124,8 +128,8 @@ export function useReviewManagement(
       }
 
       setMessages({ ...messages, edit: "Review updated successfully!" });
-      setEditingReviewId(null);
-      setEditValues({});
+      setEditingReviewId("");
+      setEditValues(defaultEditValues);
       setBookCommentsById(
         bookCommentsById.map((review) =>
           review.id === reviewId ? { ...review, ...editValues } : review

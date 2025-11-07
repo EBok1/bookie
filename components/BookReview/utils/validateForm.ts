@@ -1,5 +1,5 @@
 type ValidateFormProps = {
-rating: string; 
+rating?: number; 
 reviewerName: string; 
 reviewerComment: string; 
 }
