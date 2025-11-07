@@ -1,3 +1,13 @@
+type CreateBookObjectProps = {
+title: string; 
+author: string; 
+genre: string;
+isbn: string; 
+language: string; 
+publishedYear: string; 
+description: string; 
+}
+
 export const createBookObject = ({
   title,
   author,
@@ -6,7 +16,7 @@ export const createBookObject = ({
   language,
   publishedYear,
   description,
-}) => {
+}: CreateBookObjectProps) => {
   const date = new Date().toLocaleDateString("nl-NL");
 
   return {
