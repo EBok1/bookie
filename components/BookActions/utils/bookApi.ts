@@ -1,4 +1,6 @@
-export async function updateBook(bookId, bookData) {
+import type { EditValues } from "@/app/types/editValues";
+
+export async function updateBook(bookId: string, bookData: EditValues) {
     const response = await fetch(`/api/books/${bookId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -8,7 +10,7 @@ export async function updateBook(bookId, bookData) {
       return newResult;
   }
   
-  export async function deleteBook(bookId) {
+  export async function deleteBook(bookId: string) {
     const response = await fetch(`/api/books/${bookId}`, {
         method: "DELETE",
       });
