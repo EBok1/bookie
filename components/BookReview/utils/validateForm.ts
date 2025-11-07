@@ -1,5 +1,11 @@
-export function validateForm({ rating, reviewerName, reviewerComment }) {
-  const newErrors = {};
+type ValidateFormProps = {
+rating: string; 
+reviewerName: string; 
+reviewerComment: string; 
+}
+
+export function validateForm({ rating, reviewerName, reviewerComment }: ValidateFormProps) {
+  const newErrors: Record<string, string> = {};
 
   if (!rating) {
     newErrors.rating = "Please select a rating";
@@ -15,6 +21,15 @@ export function validateForm({ rating, reviewerName, reviewerComment }) {
   return newErrors;
 }
 
+type ValidateBookProps = {
+  title: string;
+  author: string;
+  isbn: string;
+  genre: string; 
+  language: string; 
+  publishedYear: string; 
+}
+
 export function validateBook({
   title,
   author,
@@ -22,9 +37,9 @@ export function validateBook({
   genre,
   language,
   publishedYear,
-}) {
+}: ValidateBookProps) {
 
-  const newErrors = {};
+  const newErrors: Record<string, string> = {};
 
   if (!title?.trim()) {
     newErrors.title = "Please enter a title.";

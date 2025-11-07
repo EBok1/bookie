@@ -1,4 +1,6 @@
-export async function addReview(reviewData) {
+import type { ReviewData } from "@/app/types/review";
+
+export async function addReview(reviewData: ReviewData) {
   const response = await fetch("/api/comments", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -8,7 +10,7 @@ export async function addReview(reviewData) {
   return newResult;
 }
 
-export async function deleteReview(reviewId) {
+export async function deleteReview(reviewId: ReviewData) {
   const response = await fetch(`/api/comments/${reviewId}`, {
     method: "DELETE",
   });
@@ -16,7 +18,7 @@ export async function deleteReview(reviewId) {
   return newResult;
 }
 
-export async function editReview(reviewId, editValues) {
+export async function editReview(reviewId: ReviewData, editValues: ReviewData) {
   const response = await fetch(`/api/comments/${reviewId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
