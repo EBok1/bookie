@@ -1,5 +1,5 @@
 "use client";
-import FavoritesList from "./FavoritesList.jsx";
+import FavoritesList from "./FavoritesList";
 
 export default function FavoritesPage() {
   return (
