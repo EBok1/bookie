@@ -1,6 +1,6 @@
 import { supabase } from "../../supabaseClient";
 
-export async function GET(request) {
+export async function GET(request: Request) {
   if (!supabase) {
     console.error(
       "❌ Supabase client not initialized. Check your environment variables."
@@ -18,9 +18,8 @@ export async function GET(request) {
       query = query.eq("book_id", bookId);
     }
 
-    const { data, error } = await query;
+    const { data } = await query;
 
-    console.log("✅ Get comments result", ":", { data, error });
     return Response.json({ data: data || [] });
   } catch (err) {
     console.error("❌ Get comments error:", err);
@@ -28,7 +27,7 @@ export async function GET(request) {
   }
 }
 
-export async function POST(request) {
+export async function POST(request: Request) {
   if (!supabase) {
     console.error(
       "❌ Supabase client not initialized. Check your environment variables."
@@ -50,8 +49,6 @@ export async function POST(request) {
       .insert([reviewData])
       .select();
 
-    console.log("✅ Add review result:", { data, error });
-
     if (error) {
       return Response.json({ data: null, error }, { status: 400 });
     }
@@ -60,7 +57,7 @@ export async function POST(request) {
   } catch (err) {
     console.error("❌ Add review error:", err);
     return Response.json(
-      { data: null, error: { message: err.message } },
+      { data: null, error: { message: err instanceof Error ? err.message : "Unknown error" } },
       { status: 500 }
     );
   }
