@@ -21,7 +21,7 @@ export const BookActions = ({ bookData }: BookActionsProps) => {
     cancelEditing,
     saveEdit,
     handleDeleteBook,
-  } = useBookManagement(bookData, router);
+  } = useBookManagement(router);
 
   return (
     <>

@@ -2,7 +2,7 @@ import "./globals.css";
 import { Playfair_Display } from "next/font/google";
 import Navigation from "../components/Navigation/Navigation";
 import { Footer } from "../components/Footer/Footer";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 const playfair = Playfair_Display({
