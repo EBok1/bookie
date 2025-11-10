@@ -48,7 +48,7 @@ export function ReviewFilters({ reviewManagement }: ReviewFiltersProps) {
               }
               onClick={() => {
                 setFilterReview(filterOption);
-                updateSearchParams(filterOption);
+                updateSearchParams(filterOption.toString());
               }}
             >
               {filterOption === 0 ? "All" : `${filterOption}★`}
