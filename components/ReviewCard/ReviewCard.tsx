@@ -1,19 +1,12 @@
 "use client";
-import type { EditValues } from "@/app/types/editValues";
-
-type Review = {
-  id: string;
-  reviewer: string;
-  comment: string;
-  rating: number;
-};
+import type { ReviewData } from "@/app/types/review";
 
 type ReviewCardProps = {
-  review: Review;
-  isEditing: string | null;
-  editValues: EditValues;
-  onEditValuesChange: (values: EditValues) => void;
-  onStartEdit: (review: Review) => void;
+  review: ReviewData;
+  isEditing: string | undefined;
+  editValues: ReviewData;
+  onEditValuesChange: (values: ReviewData) => void;
+  onStartEdit: (review: ReviewData) => void;
   onSaveEdit: (id: string) => void;
   onCancelEdit: () => void;
   onDelete: (id: string) => void;

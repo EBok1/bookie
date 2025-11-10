@@ -53,7 +53,7 @@ export function ReviewList({ reviewManagement }: ReviewListProps) {
 
   return (
     <div>
-      {reviews.map((review) => (
+      {filteredReviews.map((review) => (
         <ReviewCard
           key={review.id}
           review={review}
