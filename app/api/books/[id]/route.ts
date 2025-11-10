@@ -1,6 +1,9 @@
 import { supabase } from "../../../supabaseClient";
 
-export async function GET(request, { params }) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   const { id } = await params;
   if (!supabase) {
     console.error(
@@ -22,7 +25,10 @@ export async function GET(request, { params }) {
   }
 }
 
-export async function PUT(request, { params }) {
+export async function PUT(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   const { id } = await params;
   const updateData = await request.json();
 
@@ -46,7 +52,7 @@ export async function PUT(request, { params }) {
         language: updateData.language,
       })
       .eq("id", id);
-    
+
     if (error) {
       console.error("❌ Update book error:", error);
     }
@@ -57,7 +63,10 @@ export async function PUT(request, { params }) {
   }
 }
 
-export async function DELETE(request, { params }) {
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   const { id } = await params;
 
   if (!supabase) {
@@ -72,7 +81,7 @@ export async function DELETE(request, { params }) {
       .from("comments")
       .delete()
       .eq("book_id", id);
-    
+
     if (commentsError) {
       console.error("❌ Delete comments error:", commentsError);
     }
