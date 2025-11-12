@@ -19,11 +19,13 @@ A modern book management and discovery app featuring popular BookTok fantasy and
 ## Tech Stack
 
 - **Next.js 15** - React framework with App Router and server components
-- **React 19** - Modern React with hooks and state management  
+- **React 19** - Modern React with hooks and state management
+- **TypeScript** - Type-safe development with full type coverage
 - **Supabase** - Database with secure server-side access
 - **REST API** - Custom API routes for all data operations
 - **Tailwind CSS** - Utility-first CSS framework with custom design system
 - **ESLint** - Code linting for quality assurance
+- **Prettier** - Code formatting for consistency
 - **Font Awesome** - Icons and UI enhancements
 - **LocalStorage API** - Client-side data persistence for favorites
 
@@ -48,7 +50,7 @@ This architecture ensures that even if someone inspects the browser console, the
 
 ### Prerequisites
 
-- Node.js (version 14 or higher)
+- Node.js (version 18.18 or higher)
 - npm or yarn
 
 ### Installation
@@ -109,7 +111,7 @@ npm run dev
 - Favorites are saved locally and persist between sessions
 
 ### Navigation
-- **Available Pages**: Home, About, Favorites (Contact and Login links exist but pages not yet implemented)
+- **Available Pages**: Home, About, Favorites, Contact, Login
 - **Mobile**: Use the hamburger menu for navigation
 - **Desktop**: Access menu items from the top navigation bar
 - **Responsive**: Interface adapts automatically to screen size
@@ -186,105 +188,117 @@ bookie/
 │   └── front-page.png      # Landing page image
 ├── app/
 │   ├── about/
-│   │   └── page.jsx        # About page
+│   │   └── page.tsx        # About page
 │   ├── addbook/
 │   │   ├── hooks/
-│   │   │   ├── useBookForm.js  # Book form state management
-│   │   │   └── useGenres.js    # Genre fetching hook
+│   │   │   ├── useBookForm.ts  # Book form state management
+│   │   │   └── useGenres.ts    # Genre fetching hook
 │   │   ├── utils/
-│   │   │   └── formHelpers.js  # Form utilities
-│   │   └── page.jsx        # Add new book page
+│   │   │   └── formHelpers.ts  # Form utilities
+│   │   └── page.tsx        # Add new book page
 │   ├── api/                # REST API Routes
 │   │   ├── books/
 │   │   │   ├── [id]/
-│   │   │   │   └── route.js    # GET /api/books/:id
-│   │   │   └── route.js        # GET, POST /api/books
+│   │   │   │   └── route.ts    # GET /api/books/:id
+│   │   │   └── route.ts        # GET, POST /api/books
 │   │   ├── comments/
 │   │   │   ├── [id]/
-│   │   │   │   └── route.js    # PUT, DELETE /api/comments/:id
-│   │   │   └── route.js        # GET, POST /api/comments
+│   │   │   │   └── route.ts    # PUT, DELETE /api/comments/:id
+│   │   │   └── route.ts        # GET, POST /api/comments
 │   │   └── genres/
-│   │       └── route.js    # GET /api/genres
+│   │       └── route.ts    # GET /api/genres
 │   ├── book/
 │   │   └── [id]/
-│   │       └── page.jsx    # Dynamic book detail pages
+│   │       └── page.tsx    # Dynamic book detail pages
+│   ├── contact/
+│   │   └── page.tsx        # Contact form page
 │   ├── favorites/
-│   │   ├── FavoritesList.jsx # Favorites list component
-│   │   └── page.jsx        # User favorites page
+│   │   ├── FavoritesList.tsx # Favorites list component
+│   │   └── page.tsx        # User favorites page
+│   ├── login/
+│   │   └── page.tsx        # Login page
+│   ├── types/              # TypeScript type definitions
+│   │   ├── book.ts         # Book types
+│   │   ├── bookData.ts     # Book data types
+│   │   ├── editValues.ts   # Edit form types
+│   │   └── review.ts       # Review types
 │   ├── globals.css         # Global styles
-│   ├── layout.jsx          # Root layout component
-│   ├── page.jsx            # Homepage with book grid
-│   └── supabaseClient.js   # Database configuration
+│   ├── layout.tsx          # Root layout component
+│   ├── page.tsx            # Homepage with book grid
+│   └── supabaseClient.ts   # Database configuration
 ├── components/             # Reusable UI components
 │   ├── AverageBookRating/
-│   │   └── AverageBookRating.jsx
+│   │   └── AverageBookRating.tsx
 │   ├── BookActionButtons/
-│   │   └── BookActionButtons.jsx
+│   │   └── BookActionButtons.tsx
 │   ├── BookActions/
-│   │   ├── BookActions.jsx
+│   │   ├── BookActions.tsx
 │   │   ├── hooks/
-│   │   │   └── useBookManagement.js
+│   │   │   └── useBookManagement.ts
 │   │   └── utils/
-│   │       └── bookApi.js
+│   │       └── bookApi.ts
 │   ├── BookCard/
-│   │   └── BookCard.jsx    # Individual book display
+│   │   └── BookCard.tsx    # Individual book display
 │   ├── BookCardGrid/
-│   │   └── BookCardGrid.jsx
+│   │   └── BookCardGrid.tsx
 │   ├── BookDetails/
-│   │   └── BookDetails.jsx
+│   │   └── BookDetails.tsx
 │   ├── BookEditForm/
-│   │   └── BookEditForm.jsx
+│   │   └── BookEditForm.tsx
 │   ├── BookReview/
-│   │   ├── BookReview.jsx  # Main review container
+│   │   ├── BookReview.tsx  # Main review container
 │   │   ├── hooks/
-│   │   │   ├── useReviewFilter.js    # URL-based review filtering
-│   │   │   └── useReviewManagement.js # Review CRUD operations
+│   │   │   ├── useReviewFilter.ts    # URL-based review filtering
+│   │   │   └── useReviewManagement.ts # Review CRUD operations
 │   │   └── utils/
-│   │       ├── reviewApi.js    # Review API calls
-│   │       └── validateForm.js # Form validation
+│   │       ├── reviewApi.ts    # Review API calls
+│   │       └── validateForm.ts # Form validation
 │   ├── BookTag/
-│   │   └── BookTag.jsx     # Genre and info tags
+│   │   └── BookTag.tsx     # Genre and info tags
 │   ├── Dropdown/
-│   │   ├── Dropdown.jsx
+│   │   ├── Dropdown.tsx
 │   │   └── hooks/
-│   │       └── useDropdown.js
+│   │       └── useDropdown.ts
 │   ├── FallbackImage/
-│   │   └── FallbackImage.jsx
+│   │   └── FallbackImage.tsx
 │   ├── FavoriteButton/
-│   │   ├── FavoriteButton.jsx
+│   │   ├── FavoriteButton.tsx
 │   │   └── hooks/
-│   │       └── useFavorites.js
+│   │       └── useFavorites.ts
 │   ├── FileUpload/
-│   │   └── FileUpload.jsx  # File upload component
+│   │   └── FileUpload.tsx  # File upload component
 │   ├── FloatingButton/
-│   │   └── FloatingButton.jsx
+│   │   └── FloatingButton.tsx
+│   ├── Footer/
+│   │   └── Footer.tsx
 │   ├── FormField/
-│   │   └── FormField.jsx   # Reusable form input
+│   │   └── FormField.tsx   # Reusable form input
 │   ├── IsbnField/
-│   │   └── IsbnField.jsx   # ISBN input with info tooltip
+│   │   └── IsbnField.tsx   # ISBN input with info tooltip
 │   ├── Logo/
-│   │   └── Logo.jsx
+│   │   └── Logo.tsx
 │   ├── Navigation/
-│   │   └── Navigation.jsx  # Responsive navigation
+│   │   └── Navigation.tsx  # Responsive navigation
 │   ├── ReturnButton/
-│   │   └── ReturnButton.jsx
+│   │   └── ReturnButton.tsx
 │   ├── ReviewCard/
-│   │   └── ReviewCard.jsx  # Individual review display
+│   │   └── ReviewCard.tsx  # Individual review display
 │   ├── ReviewFilters/
-│   │   └── ReviewFilters.jsx # Star rating filter buttons
+│   │   └── ReviewFilters.tsx # Star rating filter buttons
 │   ├── ReviewForm/
-│   │   └── ReviewForm.jsx  # Review submission form
+│   │   └── ReviewForm.tsx  # Review submission form
 │   ├── ReviewList/
-│   │   └── ReviewList.jsx  # Filtered review display
+│   │   └── ReviewList.tsx  # Filtered review display
 │   ├── SelectGenre/
-│   │   └── SelectGenre.jsx # Genre dropdown
+│   │   └── SelectGenre.tsx # Genre dropdown
 │   ├── StarRating/
-│   │   └── StarRating.jsx  # Interactive star rating
+│   │   └── StarRating.tsx  # Interactive star rating
 │   └── SubmitButton/
-│       └── SubmitButton.jsx
+│       └── SubmitButton.tsx
 ├── .env.local              # Environment variables (not in repo)
 ├── .gitignore
 ├── package.json
+├── tsconfig.json           # TypeScript configuration
 ├── tailwind.config.js      # Tailwind configuration
 ├── next.config.js          # Next.js configuration
 └── README.md
@@ -304,6 +318,8 @@ The app uses Tailwind CSS for styling with a custom light color scheme:
 - `npm run build` - Build for production
 - `npm start` - Start production server
 - `npm run lint` - Run ESLint
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check code formatting without making changes
 
 ## Recently Implemented
 
@@ -323,11 +339,13 @@ The app uses Tailwind CSS for styling with a custom light color scheme:
 - [x] 🎨 **Custom UI Components**: Reusable form and display components with custom hooks
 - [x] 💾 **Database Integration**: Full CRUD operations via secure API layer
 - [x] 💡 **Improved UX**: ISBN info tooltip repositioned above icon for better visibility
+- [x] 📧 **Contact Page**: Full contact form with validation and success messages
+- [x] 🔐 **Login Page**: Login interface with authentication UI ready for backend integration
 
 ## Future Features
 
-- [ ] **Contact and Login pages** (navigation links exist but pages not implemented)
 - [ ] Advanced book search and filtering
+- [ ] **Authentication Backend**: Full user authentication system for Login page
 - [ ] Reading progress tracking with percentage completion
 - [ ] Social sharing features for favorite books
 - [ ] AI-powered book recommendations based on preferences
